@@ -1,0 +1,110 @@
+.myAlert{
+    position: fixed;
+    top: 5px; 
+    left:2%;
+    width: 96%;
+}
+.alertku{
+    display: none;
+}
+
+.acc-kontainer {
+    width: 100%;
+    margin: auto;
+  }
+  .acc-kontainer .acc-body {
+    width: 100%;
+    width: calc(100% - 20px);
+    margin: 0 auto;
+    height: 0;
+    color: rgba(0, 0, 0, 0);
+    line-height: 28px;
+    padding: 0 20px;
+    /* box-sizing: border-box; */
+    transition: 0.5s;
+  }
+
+  .acc-kontainer-label {
+    cursor: pointer;
+    background-color: rgba(148, 159, 167, 0.527);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: block;
+    padding: 15px;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 800;
+    box-sizing: border-box;
+    z-index: 100;
+  }
+  
+  .acc-kontainer-input{
+    display: none;
+  }
+  
+  .acc-kontainer-label:before {
+    font-family: 'FontAwesome';
+    content: '\f067';
+    font-weight: bolder;
+    float: right;
+  }
+  
+  .acc-kontainer-input:checked+label {
+    background-color: rgb(68, 133, 177);
+  }
+  
+  .acc-kontainer-input:checked+label:before {
+    font-family: 'FontAwesome';
+    content: '\f00d';
+    transition: 0.5s;
+  }
+  
+  .acc-kontainer-input:checked~.acc-body {
+    height: auto;
+    color: #333533;
+    font-size: 16px;
+    padding: 20px;
+    transition: 0.5s;
+  }
+
+  .panel-group {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 3px;
+    box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.04);
+    margin-bottom: 0;
+    padding: 30px;
+  }
+
+  .swal2-container {
+    zoom: 1.5;
+  }
+
+  a.custom {
+    color: rgb(56, 56, 56);
+    /* text-transform: uppercase; */
+    text-decoration: none;
+    /* letter-spacing: 0.15em; */
+    
+    /* display: inline-block; */
+    padding: 15px 20px;
+    position: relative;
+  }
+
+/* Animation underline */
+  a.custom:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: rgb(28, 91, 228);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+  a.custom:hover:after { 
+    width: 100%; 
+    left: 0; 
+  }
+
+
