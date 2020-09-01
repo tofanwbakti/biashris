@@ -12,7 +12,7 @@ Repo ini berisi kode dalam pengembangan untuk rilis mendatang. Aplikasi bersifat
 
 
 *******************
-Server Requirements
+Kebutuhan Server
 *******************
 
 PHP version 7.4 atau dapat menggunakan versi terbaru.
