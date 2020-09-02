@@ -1239,7 +1239,7 @@ class Hrd extends CI_Controller
       $id=decrypt_url($this->uri->segment(3));
       $fullname=decrypt_url($this->uri->segment(4));    
       $data = array(
-         'judul' => "Bias HRIS | Laporan Absensi $fullname " ,
+         'judul' => "Bias HRIS | Laporan Absensi $fullname ",
          'rowkarbyid' => $this->M_Hrd->getKarById($id),
          'rowhadirkar' => $this->M_Hrd->getAbsenKar($id)
       );

@@ -55,10 +55,10 @@ include_once APPPATH . '/third_party/fpdf181/pdf.php';
                 $this->SetY(-15);
                 $this->SetX(0);       
                 $this->Ln(1);
-                $hal = 'Page : '.$this->PageNo().'/{nb}' ;
+                $hal = 'Hal. : '.$this->PageNo().'/{nb}' ;
                 $this->Cell($this->GetStringWidth($hal ),10,$hal );   
                 $datestring = "Year: %Y Month: %m Day: %d - %h:%i %a";
-                $tanggal  = 'Printed : '.gmdate('d-m-Y  h:i-a',time()+60*60*7).' ';
+                $tanggal  = 'BiasHRIS | Print : '.gmdate('d-m-Y  H:i',time()+60*60*7).' ';
                 $this->Cell($lebar-$this->GetStringWidth($hal )-$this->GetStringWidth($tanggal)-20);   
                 $this->Cell($this->GetStringWidth($tanggal),10,$tanggal );   
             

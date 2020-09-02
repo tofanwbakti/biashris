@@ -39,14 +39,14 @@
         <div class="pull-right">
             <form action="<?=site_url('Hrd/laporanAbsenKar2')?>" method="post">
             <div class="form-inline">
-                <label for="" style="margin-right:10px"> Cari Tanggal : </label>
+                <label for="" style="margin-right:10px;margin-bottom:10px"> Tanggal : </label>
                 <div class="input-group">
                     <input type="hidden" name="idkar" value="<?=$data['id_kar']?>">
-                    <input type="text" id="reportrange" class="form-control" name="daterange" style="width:200px">
+                    <input type="text" id="reportrange" class="form-control" name="daterange" style="width:200px" placeholder="mm/dd/yyyy - mm/dd/yyyy">
                     <div class="input-group-addon"><i class="fa fa-calendar"></i>
                     </div>
                 </div>
-                <button type="submit" name="search" class="btn btn-info btn-xs" style="margin-left:5px">Cari</button>
+                <button type="submit" name="search" class="btn btn-info" style="margin-left:5px;margin-bottom:10px"><i class="fa fa-search"></i> Cari</button>
             </div>
             </form>        
         </div>

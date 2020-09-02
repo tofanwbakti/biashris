@@ -82,17 +82,17 @@ class LaporanXls extends CI_Controller{
         $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setSize(12); // Set font size 15 untuk kolom A1
 
         // Buat header tabel nya pada baris ke 3    
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"    
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('B3', "NIP"); // Set kolom B3 dengan tulisan "NIP"    
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('C3', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"    
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('D3', "TANGGAL"); // Set kolom D3 dengan tulisan "STATUS"    
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('E3', "MASUK"); // Set kolom E3 dengan tulisan "PKWT"
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('F3', "PULANG"); // Set kolom E3 dengan tulisan "Awal"
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('G3', "STATUS"); // Set kolom E3 dengan tulisan "Akhir"
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H3', "LAMBAT"); // Set kolom E3 dengan tulisan "Akhir"
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A4', "NO"); // Set kolom A3 dengan tulisan "NO"    
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('B4', "NIP"); // Set kolom B3 dengan tulisan "NIP"    
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('C4', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"    
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('D4', "TANGGAL"); // Set kolom D3 dengan tulisan "STATUS"    
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('E4', "MASUK"); // Set kolom E3 dengan tulisan "PKWT"
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('F4', "PULANG"); // Set kolom E3 dengan tulisan "Awal"
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('G4', "STATUS"); // Set kolom E3 dengan tulisan "Akhir"
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H4', "LAMBAT"); // Set kolom E3 dengan tulisan "Akhir"
         
         $no = 1; // Untuk penomoran tabel, di awal set dengan 1    
-        $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4    
+        $numrow = 5; // Set baris pertama untuk isi tabel adalah baris ke 4    
         foreach($dtAbsen as $data){ // Lakukan looping pada variabel siswa      
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);      
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data['nip']);      
@@ -112,9 +112,9 @@ class LaporanXls extends CI_Controller{
                     $beda = date_diff($jmIn,$jmDef);
                 }
             }
-                // echo $beda->h,'jam, '. $beda->i.'menit';
-
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $beda->h.' jam, '. $beda->i.' menit');       
+            // echo $beda->h,'jam, '. $beda->i.'menit';
+
             $no++; // Tambah 1 setiap kali looping      
             $numrow++; // Tambah 1 setiap kali looping    
         }
@@ -293,4 +293,76 @@ class LaporanXls extends CI_Controller{
         exit;
     }
 # /. ================= HALAMAN KONTRAK KARYAWAN =======================
+
+
+#  ================= HALAMAN ABSENSI KARYAWAN =======================
+    public function absenRange()
+    {
+        $id=decrypt_url($this->uri->segment(3));
+        $name="Atas nama : ".decrypt_url($this->uri->segment(4));
+        $awal=decrypt_url($this->uri->segment(5));
+        $akhir=decrypt_url($this->uri->segment(6));
+        $periode = "Periode : ".date('d M Y',strtotime($awal))." - ".date('d M Y',strtotime($akhir));
+
+        echo $id, '/', $name, '/' , $awal, '/' , $akhir;
+
+        #Get Data from Database
+        // $dtAbsen = $this->M_Hrd->excelAbsenKar($id,$awal,$akhir);
+
+        // #Create new doc spreadsheet
+        // $spreadsheet = new Spreadsheet();
+
+        // #Setup Document Properties 
+        // $spreadsheet->getProperties()->setCreator('BiasHRIS')
+        //         ->setLastModifiedBy('BiasHRIS')                 
+        //         ->setTitle("Laporan Absen ")                 
+        //         ->setSubject("Laporan Absensi Karyawan")                 
+        //         ->setDescription("Laporan Absensi Karyawan ".$name)                 
+        //         ->setKeywords("Absensi Karyawan");
+
+        // #Write Data on worksheet
+        // $spreadsheet->setActiveSheetIndex(0)
+        //     ->setCellValue('A1','Laporan Absensi Karyawan'); // Title header
+        // $spreadsheet->getActiveSheet()->mergeCells('A1:F1'); // Set Merge Cell pada kolom A1 sampai F1    
+        // $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); // Set bold kolom A1    
+        // $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); // Set font size 15 untuk kolom A1
+
+        // $spreadsheet->setActiveSheetIndex(0)
+        //     ->setCellValue('A2',$name); // Title header
+        // $spreadsheet->getActiveSheet()->mergeCells('A2:C2'); // Set Merge Cell pada kolom A2 sampai C2   
+        // $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); // Set bold kolom A2    
+        // $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setSize(12); // Set font size 15 untuk kolom A2
+
+        // $spreadsheet->setActiveSheetIndex(0)
+        //     ->setCellValue('E2',$periode); // Title header
+        // $spreadsheet->getActiveSheet()->mergeCells('D2:F2'); // Set Merge Cell pada kolom D2 sampai F2   
+        // $spreadsheet->getActiveSheet()->getStyle('D2')->getFont()->setBold(TRUE); // Set bold kolom D2    
+        // $spreadsheet->getActiveSheet()->getStyle('D2')->getFont()->setSize(12); // Set font size 15 untuk kolom D2
+
+        // #Table Header
+        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('A4', "NO"); // Set kolom A4 dengan tulisan "NO"    
+        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('B4', "HARI"); // Set kolom B4 dengan tulisan "NIP"    
+        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('C4', "TANGGAL"); // Set kolom C4 dengan tulisan "NAMA"   
+        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('D4', "MASUK"); // Set kolom D4 dengan tulisan "PKWT"
+        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('E4', "PULANG"); // Set kolom E4 dengan tulisan "Awal"
+        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('F4', "STATUS"); // Set kolom F4 dengan tulisan "Akhir"
+
+        // $no = 1; // mulai penomoran table
+        // $numrow = 5; // tulis mulai cell ke 5 / row ke 5
+        // foreach($dtAbsen as $data){
+        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);      
+        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data['hari']);      
+        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$numrow, date('d M Y', strtotime($data['tgl'])));      
+        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data['jam_masuk']);           
+        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data['jam_pulang']); 
+        //     if($data['absen_status'] == "2") {$ket="Terlambat";}
+        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $ket); 
+        // }
+
+        // #Looping
+        // $no++; // Tambah 1 setiap kali looping      
+        // $numrow++; // Tambah 1 setiap kali looping  
+    }
+
+#  /. ================= HALAMAN ABSENSI KARYAWAN =======================
 }

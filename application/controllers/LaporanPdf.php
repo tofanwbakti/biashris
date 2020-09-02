@@ -15,78 +15,85 @@ class LaporanPdf extends CI_Controller{
     }    
     public function absenRange()
     {
+        
         $id=decrypt_url($this->uri->segment(3));
         $name="Atas nama : ".decrypt_url($this->uri->segment(4));
         $awal=decrypt_url($this->uri->segment(5));
         $akhir=decrypt_url($this->uri->segment(6));
-        $img = base_url('assets/images/logobmg.png');
-
         
-        $pdf = new FPDF('P','mm','A4');
-        // membuat halaman baru
-        $pdf->AddPage();
-        // Header Page
-        // Image 
-        $pdf->Image($img,30,10,25);
-        // setting jenis font yang akan digunakan
-        $pdf->SetFont('Arial','B',16);
-        // mencetak string 
-        $pdf->Cell(190,7,'BIAS HRIS',0,1,'C');
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(190,7,'LAPORAN ABSENSI KARYAWAN',0,1,'C');
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(190,7,'Periode '.date("d M Y",strtotime($awal)).' - '.date("d M Y",strtotime($akhir)),0,1,'C');
-        // Memberikan space kebawah agar tidak terlalu rapat
-        $pdf->Cell(10,7,'',0,1);
-        //  Content Page>> Header Table
-         // set left margin
-        $pdf->SetLeftMargin('30');
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(190,7,$name,0,1,'L');
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(10,6,'NO',1,0);
-        $pdf->Cell(25,6,'HARI',1,0);
-        $pdf->Cell(30,6,'TGL',1,0);
-        $pdf->Cell(27,6,'JAM MASUK',1,0);
-        $pdf->Cell(27,6,'JAM KELUAR',1,0);
-        $pdf->Cell(27,6,'KETERANGAN',1,1);
-        //  Content Page >> Body Table
-        $pdf->SetFont('Arial','',10);
+        #Database Load
+        // $pdf->SetFont('Arial','',10);
         $this->db->select('*');
         $this->db->from('tb_absensi');
         $this->db->where('id_kar',$id);
         $this->db->where('tgl >=',$awal);
 		$this->db->where('tgl <=',$akhir);
         $absen = $this->db->get()->result();
+        /* TEMPLATE  HEADER */ // harus dipakai di setiap bentuk laporan
+        $pdf = new PDF('P');
+        $pdf->AddPage();
+        /* /. TEMPLATE  HEADER */ 
+        
+        #COntent
+        #title page
+        $pdf->SetFont('Arial','',10);
+        $pdf->SetTitle('BiasHRIS | Laporan Absensi');
+
+        // JUDUL FORM & No PEngajuan
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(190,7,'Laporan Absensi Karyawan',0,1,'C');
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(190,7,$name,0,1,'C');
+        $pdf->Cell(190,7,'Periode '.date("d M Y",strtotime($awal)).' - '.date("d M Y",strtotime($akhir)),0,1,'C');
+
+        #Table
+        #Header Table
+        
+        $pdf->SetLeftMargin('10');// set left margin
+        $pdf->Cell(190,7,'',0,1,'J');
+        $pdf->SetFillColor(158, 156, 156);
+        $pdf->SetLineWidth(.3);
+        $pdf->SetFont('Arial','',12);
+        $pdf->Cell(10,8,'No',1,0,'C',1);
+        $pdf->Cell(30,8,'Hari',1,0,'C',1);
+        $pdf->Cell(40,8,'Tanggal',1,0,'C',1);
+        $pdf->Cell(35,8,'Jam Masuk',1,0,'C',1);
+        $pdf->Cell(35,8,'Jam Keluar',1,0,'C',1);
+        $pdf->Cell(40,8,'Status',1,1,'C',1);
+        //  Content Page >> Body Table
+        
         $no = 1;
         foreach($absen as $data){
-            $pdf->Cell(10,6,$no++,1,0);
+            $pdf->Cell(10,6,$no++,1,0,'C');
             if($data->hari == "Monday"){
-                $pdf->Cell(25,6,"Senin",1,0);
+                $pdf->Cell(30,6,"Senin",1,0,'C');
             }else if($data->hari == "Tuesday"){
-                $pdf->Cell(25,6,"Selasa",1,0);
+                $pdf->Cell(30,6,"Selasa",1,0,'C');
             }else if($data->hari == "Wednesday"){
-                $pdf->Cell(25,6,"Rabu",1,0);
+                $pdf->Cell(30,6,"Rabu",1,0,'C');
             }else if($data->hari == "Thursday"){
-                $pdf->Cell(25,6,"Kamis",1,0);
+                $pdf->Cell(30,6,"Kamis",1,0,'C');
             }else if($data->hari == "Friday"){
-                $pdf->Cell(25,6,"Jumat",1,0);
+                $pdf->Cell(30,6,"Jumat",1,0,'C');
             }else if($data->hari == "Saturday"){
-                $pdf->Cell(25,6,"Sabtu",1,0);
+                $pdf->Cell(30,6,"Sabtu",1,0,'C');
             }else if($data->hari == "Sunday"){
-                $pdf->Cell(25,6,"Minggu",1,0);
+                $pdf->Cell(30,6,"Minggu",1,0,'C');
             }            
-            $pdf->Cell(30,6,date("d M Y",strtotime($data->tgl)),1,0);
-            $pdf->Cell(27,6,$data->jam_masuk,1,0); 
-            $pdf->Cell(27,6,$data->jam_pulang,1,0);
+            $pdf->Cell(40,6,date("d M Y",strtotime($data->tgl)),1,0,'C');
+            $pdf->Cell(35,6,$data->jam_masuk,1,0,'C'); 
+            $pdf->Cell(35,6,$data->jam_pulang,1,0,'C');
             if($data->absen_status == "2"){
-                $pdf->Cell(27,6,'Terlambat',1,1); 
+                $pdf->Cell(43,6,'Terlambat',1,1,'C'); 
             }else {
-                $pdf->Cell(27,6,'',1,1);
+                $pdf->Cell(43,6,'',1,1,'C');
             }
 
         }       
+        # TEMPLATE FOOTER dan output */ // harus dipakai di setiap bentuk laporan
+        $pdf->AliasNbPages();
         $pdf->Output();
+        # /. TEMPLATE FOOTER dan output */
     }
 
     // Kontrak All

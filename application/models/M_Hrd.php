@@ -715,6 +715,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			return $data->result_array();
 		}
 
+		// Get Data Absensi per Karyawan
+		public function excelAbsenKar($id,$awal,$akhir)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absensi');
+			$this->db->where('id_kar',$id);
+			$this->db->where('tgl >=',$awal);
+			$this->db->where('tgl <=',$akhir);
+			$data = $this->db->get();
+			return $data->result();
+		}
+
 		// ===================== ./HALAMAN Laporan ABsensi ====================
 
 		// ===================== HALAMAN Laporan ABsensi Karyawan ====================

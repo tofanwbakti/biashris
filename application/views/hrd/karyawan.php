@@ -109,8 +109,8 @@ function checkDbEmail() {
                                         echo $row->nip;
                                     }
                                     ?></td>
-                                    <td><?php echo $data['fullname']; 
-                                    if($data['id_jab'] != "J000" ) echo "<a href='".site_url('Hrd/infoKar/').encrypt_url($data['id_kar'])."' class='pull-right' data-tooltip='tooltip' title='Detail'><i class='icon fa fa-question-circle'></i></a>"; ?> </td>
+                                    <td><?php if($data['id_jab'] != "J000" ) echo "<a href='".site_url('Hrd/infoKar/').encrypt_url($data['id_kar'])."' class='pull-right' data-tooltip='tooltip' title='Detail'><i class='icon fa fa-question-circle' style='margin-left:5px'></i></a>"; echo $data['fullname']; 
+                                    ?> </td>
                                     <td><?=$data['genre'] ?> </td>
                                     <td><?=$data['alamat'] ?> </td>
                                     <td><?=$data['telp'] ?> </td>
