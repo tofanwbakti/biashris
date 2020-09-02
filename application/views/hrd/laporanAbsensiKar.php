@@ -34,8 +34,8 @@
 <div class="box box-primary">
     <div class="box-header">
         <h3 class="box-title">Laporan Absensi <strong ><?php foreach($rowkarbyid as $data) echo $data['fullname'] ?></strong></h3>
-        <a href="<?=site_url('LaporanPdf/absen/').encrypt_url($data['id_kar']).'/'.encrypt_url($data['fullname']) ?>" target="_blank" class="btn" data-toggle="tooltip" title="Print">
-        <i class="fa fa-print" style="margin-left:20px;font-size:20px"></i></a>
+        <!-- <a href="<?=site_url('LaporanPdf/absen/').encrypt_url($data['id_kar']).'/'.encrypt_url($data['fullname']) ?>" target="_blank" class="btn" data-toggle="tooltip" title="Print"> 
+        <i class="fa fa-print" style="margin-left:20px;font-size:20px"></i></a>-->
         <div class="pull-right">
             <form action="<?=site_url('Hrd/laporanAbsenKar2')?>" method="post">
             <div class="form-inline">
@@ -46,7 +46,7 @@
                     <div class="input-group-addon"><i class="fa fa-calendar"></i>
                     </div>
                 </div>
-                <button type="submit" name="search" class="btn btn-info" style="margin-left:5px">Cari</button>
+                <button type="submit" name="search" class="btn btn-info btn-xs" style="margin-left:5px">Cari</button>
             </div>
             </form>        
         </div>
