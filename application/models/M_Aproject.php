@@ -509,6 +509,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->join('tb_jabatan','tb_jabatan.id_jab=tb_karyawan.id_jab','left');
 			$this->db->join('tb_jabatan_detail','tb_jabatan_detail.kode_jail=tb_karyawan.def_jab','left');
 			$this->db->join('tb_sbu','tb_sbu.kode=tb_karyawan.kode','left');
+			$this->db->join('tb_subunit','tb_subunit.id_sub=tb_karyawan.sub_unt','left'); 						// join ke tb_subunit
 			$this->db->join('tb_departemen','tb_departemen.id_dept=tb_karyawan.id_dept','left'); 			// join ke tb_departemen
 			$this->db->where('tb_karyawan.id_kar',$id);
 			$data = $this->db->get();

@@ -22,7 +22,6 @@ class Auth extends CI_Controller
 // Proses login start
     public function proceed()
     {
-
         $post = $this->input->post(null, TRUE);
         if (isset($post['login'])){
             $this->load->model('M_Aproject');
