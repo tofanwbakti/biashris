@@ -304,64 +304,88 @@ class LaporanXls extends CI_Controller{
         $akhir=decrypt_url($this->uri->segment(6));
         $periode = "Periode : ".date('d M Y',strtotime($awal))." - ".date('d M Y',strtotime($akhir));
 
-        echo $id, '/', $name, '/' , $awal, '/' , $akhir;
+        // echo $id, '/', $name, '/' , $awal, '/' , $akhir;
 
         #Get Data from Database
-        // $dtAbsen = $this->M_Hrd->excelAbsenKar($id,$awal,$akhir);
+        $dtAbsen = $this->M_Hrd->excelAbsenKar($id,$awal,$akhir);
 
-        // #Create new doc spreadsheet
-        // $spreadsheet = new Spreadsheet();
+        #Create new doc spreadsheet
+        $spreadsheet = new Spreadsheet();
 
-        // #Setup Document Properties 
-        // $spreadsheet->getProperties()->setCreator('BiasHRIS')
-        //         ->setLastModifiedBy('BiasHRIS')                 
-        //         ->setTitle("Laporan Absen ")                 
-        //         ->setSubject("Laporan Absensi Karyawan")                 
-        //         ->setDescription("Laporan Absensi Karyawan ".$name)                 
-        //         ->setKeywords("Absensi Karyawan");
+        #Setup Document Properties 
+        $spreadsheet->getProperties()->setCreator('BiasHRIS')
+                ->setLastModifiedBy('BiasHRIS')                 
+                ->setTitle("Laporan Absen ")                 
+                ->setSubject("Laporan Absensi Karyawan")                 
+                ->setDescription("Laporan Absensi Karyawan ".$name)                 
+                ->setKeywords("Absensi Karyawan");
 
-        // #Write Data on worksheet
-        // $spreadsheet->setActiveSheetIndex(0)
-        //     ->setCellValue('A1','Laporan Absensi Karyawan'); // Title header
-        // $spreadsheet->getActiveSheet()->mergeCells('A1:F1'); // Set Merge Cell pada kolom A1 sampai F1    
-        // $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); // Set bold kolom A1    
-        // $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); // Set font size 15 untuk kolom A1
+        #Write Data on worksheet
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1','Laporan Absensi Karyawan'); // Title header
+        $spreadsheet->getActiveSheet()->mergeCells('A1:F1'); // Set Merge Cell pada kolom A1 sampai F1    
+        $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); // Set bold kolom A1    
+        $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setSize(15); // Set font size 15 untuk kolom A1
 
-        // $spreadsheet->setActiveSheetIndex(0)
-        //     ->setCellValue('A2',$name); // Title header
-        // $spreadsheet->getActiveSheet()->mergeCells('A2:C2'); // Set Merge Cell pada kolom A2 sampai C2   
-        // $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); // Set bold kolom A2    
-        // $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setSize(12); // Set font size 15 untuk kolom A2
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A2',$name); // Title header
+        $spreadsheet->getActiveSheet()->mergeCells('A2:C2'); // Set Merge Cell pada kolom A2 sampai C2   
+        $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); // Set bold kolom A2    
+        $spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setSize(12); // Set font size 15 untuk kolom A2
 
-        // $spreadsheet->setActiveSheetIndex(0)
-        //     ->setCellValue('E2',$periode); // Title header
-        // $spreadsheet->getActiveSheet()->mergeCells('D2:F2'); // Set Merge Cell pada kolom D2 sampai F2   
-        // $spreadsheet->getActiveSheet()->getStyle('D2')->getFont()->setBold(TRUE); // Set bold kolom D2    
-        // $spreadsheet->getActiveSheet()->getStyle('D2')->getFont()->setSize(12); // Set font size 15 untuk kolom D2
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('D2',$periode); // Title header
+        $spreadsheet->getActiveSheet()->mergeCells('D2:F2'); // Set Merge Cell pada kolom D2 sampai F2   
+        $spreadsheet->getActiveSheet()->getStyle('D2')->getFont()->setBold(TRUE); // Set bold kolom D2    
+        $spreadsheet->getActiveSheet()->getStyle('D2')->getFont()->setSize(12); // Set font size 15 untuk kolom D2
 
-        // #Table Header
-        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('A4', "NO"); // Set kolom A4 dengan tulisan "NO"    
-        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('B4', "HARI"); // Set kolom B4 dengan tulisan "NIP"    
-        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('C4', "TANGGAL"); // Set kolom C4 dengan tulisan "NAMA"   
-        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('D4', "MASUK"); // Set kolom D4 dengan tulisan "PKWT"
-        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('E4', "PULANG"); // Set kolom E4 dengan tulisan "Awal"
-        // $spreadsheet->setActiveSheetIndex(0)->setCellValue('F4', "STATUS"); // Set kolom F4 dengan tulisan "Akhir"
+        #Table Header
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A4', "NO"); // Set kolom A4 dengan tulisan "NO"    
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('B4', "HARI"); // Set kolom B4 dengan tulisan "NIP"    
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('C4', "TANGGAL"); // Set kolom C4 dengan tulisan "NAMA"   
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('D4', "MASUK"); // Set kolom D4 dengan tulisan "PKWT"
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('E4', "PULANG"); // Set kolom E4 dengan tulisan "Awal"
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('F4', "STATUS"); // Set kolom F4 dengan tulisan "Akhir"
 
-        // $no = 1; // mulai penomoran table
-        // $numrow = 5; // tulis mulai cell ke 5 / row ke 5
-        // foreach($dtAbsen as $data){
-        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);      
-        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data['hari']);      
-        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$numrow, date('d M Y', strtotime($data['tgl'])));      
-        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data['jam_masuk']);           
-        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data['jam_pulang']); 
-        //     if($data['absen_status'] == "2") {$ket="Terlambat";}
-        //     $spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $ket); 
-        // }
+        $no = 1; // mulai penomoran table
+        $numrow = 5; // tulis mulai cell ke 5 / row ke 5
+        foreach($dtAbsen as $data){
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);      
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data['hari']);      
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$numrow, date('d M Y', strtotime($data['tgl'])));      
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data['jam_masuk']);           
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data['jam_pulang']); 
+            if($data['absen_status'] == "2") {$ket="Terlambat";}
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $ket); 
+        }
 
-        // #Looping
-        // $no++; // Tambah 1 setiap kali looping      
-        // $numrow++; // Tambah 1 setiap kali looping  
+        #Looping
+        $no++; // Tambah 1 setiap kali looping      
+        $numrow++; // Tambah 1 setiap kali looping  
+
+        // Set width kolom    
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(5); // Set width kolom A    
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(15); // Set width kolom B    
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25); // Set width kolom C    
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20); // Set width kolom D    
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(15); // Set width kolom E
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(30); // Set width kolom F
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(30); // Set width kolom G
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15); // Set width kolom H
+
+        // Set judul file excel nya    
+        $spreadsheet->getActiveSheet(0)->setTitle("Laporan Absensi Karyawan");    
+        $spreadsheet->setActiveSheetIndex(0);
+
+        // Proses file excel    
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');    
+        header('Content-Disposition: attachment; filename="Laporan Absensi Karyawan.xlsx"'); // Set nama file excel nya    
+        header('Cache-Control: max-age=0');
+
+        $write =IOFactory::createWriter($spreadsheet, 'Xlsx');    
+        $write->save('php://output');
+
+        exit;
     }
 
 #  /. ================= HALAMAN ABSENSI KARYAWAN =======================
