@@ -821,6 +821,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             ele.style.visibility = (ele.style.visibility == 'hidden' ? '' : 'hidden');
 		}, blink_speed);
 
+        // Alert hilang sendiri 
+        window.setTimeout(function () {
+            $(".alert-dismissable").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
+
     </script>
 </body>
 </html>

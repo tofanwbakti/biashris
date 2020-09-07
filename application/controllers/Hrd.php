@@ -544,22 +544,103 @@ class Hrd extends CI_Controller
    {
       $data = array (
          'judul' => 'BiasHRIS | SBU',
+         'rowgrup' => $this->M_Hrd->getGrup(),
+         'grupAkt' => $this->M_Hrd->getGrupAktif(),
          'rowsbu' => $this->M_Hrd->getSbu(),
          'rowsub' => $this->M_Hrd->getSub(),
+         'idgrup' => $this->M_Hrd->genIdGrup(), // generate kode Sub Unit
          'kodesub' => $this->M_Hrd->genKodeSub(), // generate kode Sub Unit
       );
       $this->template->load('template','hrd/sbu',$data);
    }
 
+   // Tambah Data Grup
+   public function addGrup()
+   {
+      $idgrup     = $this->input->post('idgrup',TRUE);
+      $kodegrup   = $this->input->post('kodegrup',TRUE);
+      $namagrup   = $this->input->post('namagrup',TRUE);
+      $status     = $this->input->post('status',TRUE);
+
+      $data = array(
+         'id_grup'   => $idgrup,
+         'kode_grup' => $kodegrup,
+         'nama_grup' => $namagrup,
+         'status_grup'    => $status
+      );
+
+      $cek = $this->db->query("SELECT * FROM tb_sbu_grup WHERE kode_grup='$kodegrup'");
+      if($cek->num_rows() != 0){
+         $this->session->set_flashdata('flash_error','Ditambahkan');
+         redirect('Hrd/sbu');
+      }else{
+         $query = $this->M_Hrd->addGrup('tb_sbu_grup',$data);
+         $this->session->set_flashdata('flash','Ditambahkan');
+         redirect('Hrd/sbu');
+      }
+   }
+
+   // Hapus Data Grup
+   public function delGrup()
+   {
+      $id = decrypt_url($this->uri->segment(3));
+
+      $this->M_Hrd->delGrup($id,'tb_sbu_grup');
+      if($this->db->affected_rows()){
+         $this->session->set_flashdata('flash','Dihapus');
+         redirect('Hrd/sbu');
+      }else {
+         $this->session->set_flashdata('flash_error','Dihapus');
+         redirect('Hrd/sbu');
+      }
+      // echo $id;
+   }
+
+   // Update Data Grup
+   public function updateGrup()
+   {
+      $id      = $this->input->post('id_grup',TRUE);
+      $kode    = $this->input->post('kode_grup',TRUE);
+      $nama    = $this->input->post('nama_grup',TRUE);
+
+      $data    = array (
+         'kode_grup' => $kode,
+         'nama_grup' => $nama
+      );
+
+      $where = array ('id_grup' => $id);
+
+      $query = $this->M_Hrd->updateGrup('tb_sbu_grup',$data,$where);
+      $this->session->set_flashdata('flash','Diubah');
+      redirect('Hrd/sbu');
+   }
+
+   // Update Status Grup
+   public function updateStatus()
+   {
+      $id      = decrypt_url($this->uri->segment(3));
+      $status  = decrypt_url($this->uri->segment(4));
+
+      $data = array ('status_grup' => $status);
+
+      $where = array ('id_grup' => $id);
+
+      $query = $this->M_Hrd->updateStatusGrup('tb_sbu_grup',$data,$where);
+      $this->session->set_flashdata('flash','Diubah');
+      redirect('Hrd/sbu');
+   }
+
    // Tambah Data SBU
    public function addSbu()
    {      
-      $sbu = $this->input->post('kodesbu');
-      $nama = $this->input->post('namasbu');
+      $sbu     = $this->input->post('kode_sbu');
+      $nama    = $this->input->post('nama_sbu');
+      $grup    = $this->input->post('grup_sbu');
 
       $data=array(
          'kode'   => $sbu,
-         'nama'   => $nama
+         'nama'   => $nama,
+         'grup'   => $grup
       );
 
       $cek = $this->db->query("SELECT * FROM tb_sbu WHERE kode='$sbu'");
@@ -576,10 +657,14 @@ class Hrd extends CI_Controller
    // Edit Data SBU 
    public function updateSbu()
    {
-      $sbu = $this->input->post('kodesbu');
-      $nama = $this->input->post('namasbu');
+      $sbu = $this->input->post('kodesbu',TRUE);
+      $nama = $this->input->post('namasbu',TRUE);
+      $grup = $this->input->post('grupsbu',TRUE);
 
-      $data = array ('nama'=> $nama);
+      $data = array (
+         'nama'   => $nama,
+         'grup'   => $grup
+      );
 
       $query = $this->M_Hrd->updateSbu('tb_sbu',$data,$sbu);
       $this->session->set_flashdata('flash','Diubah');

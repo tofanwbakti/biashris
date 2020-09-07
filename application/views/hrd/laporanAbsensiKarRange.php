@@ -66,12 +66,9 @@
                 <a href="<?=site_url('LaporanPdf/absenRange/').encrypt_url($data['id_kar']).'/'.encrypt_url($data['fullname']).'/'.encrypt_url($range1).'/'.encrypt_url($range2) ?>" target="_blank" class="pull-right" data-toggle="tooltip" title="PDF">
                 <i class="fa fa-file-pdf-o text-red" style="font-size:20px"></i></a>
                 <a href="<?=site_url('LaporanXls/absenRange/').encrypt_url($data['id_kar']).'/'.encrypt_url($data['fullname']).'/'.encrypt_url($range1).'/'.encrypt_url($range2)?>" class="pull-right" data-toggle="tooltip" title="Excel"target="_blank"><i class="fa fa-file-excel-o text-green" style="margin-right:10px;font-size:20px"></i></a>
-                <!-- <a href="#" id="excel" ><i class="pull-right fa fa-file-excel-o text-green" style="margin-right:10px;font-size:20px" data-toggle="tooltip" title="Excel" ></i></a> 
-                <a href="javascript:void(0)"><i class="pull-right fa fa-file-excel-o text-green" style="margin-right:10px;font-size:20px" data-toggle="tooltip" title="Excel" ></i></a>-->
                 <a href="<?=site_url('Hrd/laporanAbsenKar/').encrypt_url($data['id_kar']).'/'.encrypt_url($data['fullname']) ?>" class="pull-right" data-toggle="tooltip" title="Reset">
                 <i class="fa fa-undo " style="margin-right:10px;font-size:20px;color:#8F8F8F"></i></a>
             </span>
-
         </div>
     </div>
     <div class="box-body table-responsive">

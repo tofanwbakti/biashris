@@ -52,8 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		{
 			$this->db->where($where);
 			$this->db->update($table,$data);
-        }
-        
+		}
+		
+	#Halaman SBU        
         // SBU dan SUb UNit
 		public function getSbu()
 		{
@@ -61,7 +62,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->from('tb_sbu');
 			$data = $this->db->get();
 			return $data->result_array();
-        }
+		}
+		
+		// tambah grup
+		public function addGrup($table,$data)
+		{
+			$insert = $this->db->insert($table,$data);
+			return $data;
+		}
+
+		// Hapus Grup
+		public function delGrup($id,$table)
+		{
+			$this->db->where('id_grup',$id);
+			$this->db->delete($table);			
+		}
+
+		// Update Data Grup
+		public function updateGrup($table,$data,$where)
+		{
+			$this->db->where($where);
+			$this->db->update($table,$data);
+		}
+
+		// Update Status Grup
+		public function updateStatusGrup($table,$data,$where)
+		{
+			$this->db->where($where);
+			$this->db->update($table,$data);
+		}
         
         // tambah SBU
 		public function addSbu($table,$data)
@@ -140,13 +169,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 		// GRUP SBU
+		// Generate nomor otomatis untuk id Group
+		public function genIdGrup()
+		{
+			$prfx = 'G';
+			$query = $this->db->query("SELECT MAX(id_grup) as maxKode FROM tb_sbu_grup"); 
+			$row = $query->row_array();
+			$idGrup = $row['maxKode'];
+			$noUrut = (int) substr($idGrup,1,1);
+			$noUrut++;
+			$newId = $prfx.sprintf($noUrut);
+			return $newId;
+		}
+
 		// Get Data Grup
 		public function getGrup()
 		{
 			$this->db->select('*');
 			$this->db->from('tb_sbu_grup');
 			// $this->db->join('tb_sbu','tb_sbu.grup=tb_sbu_grup.kode_grup','left');
-			$this->db->order_by('id_grup','Desc');
+			$this->db->order_by('id_grup','ASC');
+			$data = $this->db->get();
+			return $data->result_array();
+		}
+
+		// Get Data Grup
+		public function getGrupAktif()
+		{
+			$this->db->select('*');
+			$this->db->from('tb_sbu_grup');
+			$this->db->order_by('id_grup','ASC');
+			$this->db->where('status_grup',"A");
 			$data = $this->db->get();
 			return $data->result_array();
 		}
