@@ -60,6 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$sub =  $this->fungsi->user_login()->sub_unt;
 			$jab =  $this->fungsi->user_login()->id_jab;
 			$dept = $this->fungsi->user_login()->id_dept;
+			$grup = $this->fungsi->user_login()->id_grup;
 
 			$this->db->select('*');
 			$this->db->from('tb_ijinkeluar');
@@ -73,11 +74,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
 				$this->db->where('tb_karyawan.id_dept',$dept); // berdasarkan departemen karyawan
-				$this->db->like('tb_karyawan.id_jab',"J009"||"J010"); // berdasarkan jabatan karyawan
+				$this->db->where('tb_karyawan.id_jab !=',"J007"); // berdasarkan jabatan karyawan
 				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
-			}else if($id2 == "A4"){
+			}else if (($id2 == "A4") && ($jab == "J006")){ #jabatan direktur
+				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
+			}else if(($id2 == "A4") && ($jab == "J007")){ #jabatan GM
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
+				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
 			}
 			$query = $this->db->get();
 			return $query;
@@ -131,15 +136,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->order_by('tb_ijinlambat.id_ila','DESC');
 			if ($level == "A5"){ //karyawan
 				$this->db->where('tb_userakses.email',$email);
-			}else if(($level == "A4") && ($jab == "J008") ){ //Atasan
+			}else if(($level == "A4") && ($jab == "J008") ){ //Atasan level Manager
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
 				$this->db->where('tb_karyawan.id_jab !=',"J007"); // berdasarkan jabatan karyawan
 				#$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
 				$this->db->where('tb_karyawan.id_dept',$dept); // berdasarkan departemen karyawan
-			}else if($level == "A4"){
+			}else if (($level == "A4") && ($jab == "J006")){ #jabatan direktur
+				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
+			}else if(($level == "A4") && ($jab == "J007")){ #jabatan GM
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
+				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
 			}
 			$query = $this->db->get();
 			return $query->result_array();
@@ -188,12 +197,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
 				$this->db->where('tb_karyawan.id_dept',$dept); // berdasarkan departemen karyawan
-				$this->db->like('tb_karyawan.id_jab',"J009"||"J010"); // berdasarkan jabatan karyawan
+				$this->db->where('tb_karyawan.id_jab !=',"J007"); // berdasarkan jabatan karyawan
 				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
-			}else if($id2 == "A4"){
+			}else if (($id2 == "A4") && ($jab == "J006")){ #jabatan direktur
+				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
+			}else if(($id2 == "A4") && ($jab == "J007")){ #jabatan GM
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
-			}		
+				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
+			}
 			$query = $this->db->get();
 			return $query;
 		}
@@ -227,6 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$sub =  $this->fungsi->user_login()->sub_unt;
 			$jab =  $this->fungsi->user_login()->id_jab;
 			$dept = $this->fungsi->user_login()->id_dept;
+			$grup = $this->fungsi->user_login()->id_grup;
 
 			$this->db->select('*');
 			$this->db->from('tb_ijinalpa');
@@ -240,12 +254,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
 				$this->db->where('tb_karyawan.id_dept',$dept); // berdasarkan departemen karyawan
-				$this->db->like('tb_karyawan.id_jab',"J009"||"J010"); // berdasarkan jabatan karyawan
+				$this->db->where('tb_karyawan.id_jab !=',"J007"); // berdasarkan jabatan karyawan
 				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
-			}else if($id2 == "A4"){
+			}else if (($id2 == "A4") && ($jab == "J006")){ #jabatan direktur
+				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
+			}else if(($id2 == "A4") && ($jab == "J007")){ #jabatan GM
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
-			}	
+				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
+			}
 			// $id = $this->fungsi->user_login()->email;
 			// $id2 =  $this->fungsi->user_login()->id_lvl;		
 			// $sbu =  $this->fungsi->user_login()->kode;
@@ -310,12 +328,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
 				$this->db->where('tb_karyawan.id_dept',$dept); // berdasarkan departemen karyawan
-				$this->db->like('tb_karyawan.id_jab',"J009"||"J010"); // berdasarkan jabatan karyawan
+				$this->db->where('tb_karyawan.id_jab !=',"J007"); // berdasarkan jabatan karyawan
 				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
-			}else if($id2 == "A4"){
+			}else if (($id2 == "A4") && ($jab == "J006")){ #jabatan direktur
+				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
+			}else if(($id2 == "A4") && ($jab == "J007")){ #jabatan GM
 				$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
-			}			
+				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
+			}		
 			$query = $this->db->get();
 			return $query;
 		}

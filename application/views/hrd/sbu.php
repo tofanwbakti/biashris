@@ -195,7 +195,7 @@
                             <td><?=$data['namasub'] ?></td>
                             <td align="center"><a href="#" data-toggle="tooltip" title="Item">
                             <?php 
-                                $this->db->where('sub_unt',$data['sub']);
+                                $this->db->where('sub_unt',$data['id_sub']);
                                 $this->db->where('stat_kar !=',"F");
                                 $this->db->from('tb_karyawan');
                                 echo $this->db->count_all_results(); ?></a></td>
@@ -455,15 +455,6 @@
                     <div class="box-body">
                         <input type="hidden" id="idsub" name="idsub" value="<?=$kodesub?>" class="form-control" readonly>
                         <div class="form-group">
-                            <label for="sbu">Pilih SBU:</label>
-                            <select class="form-control" id="sbu" name="sbu" required>
-                                <option selected disabled>Pilih Satu..</option>
-                                <?php foreach($rowsbu as $data){ ?>
-                                <option value="<?=$data['kode']?>"><?=$data['kode']?> - <?=$data['nama']?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="subkode">Kode Sub Unit</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="subkode" name="subkode" onkeyup="this.value = this.value.toUpperCase()" placeholder="Kode Sub Unit.." required>
@@ -475,12 +466,21 @@
                         <div class="form-group">
                             <label for="namasub" >Deskripsi Sub Unit</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="namasub" name="namasub" placeholder="Deskripsi Sub Unit.." required>
+                                <input type="text" class="form-control" id="namasub" name="namasub" onkeyup="this.value = this.value.toUpperCase()" placeholder="Deskripsi Sub Unit.." required>
                                 <div class="input-group-addon">
                                 <i class="fa fa-tags"></i>
                                 </div>
                             </div>
-                        </div>                            
+                        </div> 
+                        <div class="form-group">
+                            <label for="sbu">Pilih SBU:</label>
+                            <select class="form-control" id="sbu" name="sbu" required>
+                                <option selected disabled>Pilih Satu..</option>
+                                <?php foreach($rowsbu as $data){ ?>
+                                <option value="<?=$data['kode']?>"><?=$data['kode']?> - <?=$data['nama']?></option>
+                                <?php } ?>
+                            </select>
+                        </div>                           
                     </div><!-- /.box-body -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
@@ -518,7 +518,7 @@
                             <div class="form-group">
                                 <label for="namasub" >Deskripsi Sub Unit</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="namasub" name="namasub" placeholder="Deskripsi Sub Unit.." required>
+                                    <input type="text" class="form-control" id="namasub" name="namasub" onkeyup="this.value = this.value.toUpperCase()" placeholder="Deskripsi Sub Unit.." required>
                                     <div class="input-group-addon">
                                     <i class="fa fa-tags"></i>
                                     </div>
