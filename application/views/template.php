@@ -269,8 +269,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="#"><i class="fa fa-building-o text-danger"></i> Perusahaan <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
                                 <li><a href="<?php echo base_url();?>Hrd/sbu"><i class="fa fa-circle-o text-danger"></i> Data SBU & Unit </a></li>
-                                <li><a href="<?= site_url('Hrd/jabatan')?>"><i class="fa fa-circle-o text-danger"></i> Data Jabatan</a></li>
                                 <li><a href="<?= site_url('Hrd/departemen')?>"><i class="fa fa-circle-o text-danger"></i> Data Departemen</a></li>
+                                <li><a href="<?= site_url('Hrd/jabatan')?>"><i class="fa fa-circle-o text-danger"></i> Data Jabatan</a></li>
                                 <li><a href="<?= site_url('Hrd/datacuti')?>"><i class="fa fa-circle-o text-danger"></i> Data Cuti</a></li>
                                 <!-- <li><a href="<?= site_url('Hrd/indexNilai')?>"><i class="fa fa-circle-o text-danger"></i> Data Index Penilaian</a></li>
                                 <li><a href="<?= site_url('Hrd/struktur')?>"><i class="fa fa-circle-o text-danger"></i> Data Struktur Org.</a></li>  -->                               

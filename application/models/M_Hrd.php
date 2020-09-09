@@ -345,7 +345,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		public function getLinkDept($id)
 		{
 			// $query = $this->db->query("SELECT * FROM tb_departemen WHERE id_sub='$id'");
-			$query = $this->db->query("SELECT * FROM tb_departemen WHERE id_sub='$id'");
+			$query = $this->db->query("SELECT * FROM tb_departemen WHERE id_sub='$id' ORDER By nama_dept ASC");
 			return $query->result_array();
 			// $this->db->select('*');
 			// $this->db->from('tb_departemen');
@@ -454,7 +454,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		// Get Data Detail Jabatan
 		public function getDetailJab($id)
 		{
-			$query = $this->db->query("SELECT * FROM tb_jabatan_detail WHERE id_jab='$id' AND aktif='Y'");
+			$query = $this->db->query("SELECT * FROM tb_jabatan_detail WHERE id_jab='$id' AND aktif='Y' ORDER BY nama_jail ASC");
 			return $query->result_array();
 		}
 

@@ -525,7 +525,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="sbu">Pilih Level:</label>
+                                <label for="sbu">Pilih SBU:</label>
                                 <select class="form-control" id="sbu" name="sbu" required>
                                     <option selected disabled>Pilih Satu..</option>
                                     <?php foreach($rowsbu as $data){ ?>
