@@ -346,7 +346,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
         
-            <b>Version</b> 20.08.5  <!-- [Tahun].[Bulan].[Upgrade ke]  -->
+            <b>Version</b> 20.09.1  <!-- [Tahun].[Bulan].[Upgrade ke]  -->
         </div>
         <strong>Copyright &copy; 2019 <a href="#">ICT Bias Mandiri Group</a>.</strong> All rights reserved.
     </footer>

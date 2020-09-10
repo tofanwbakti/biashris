@@ -79,7 +79,7 @@
 <!-- FOOTER START -->
 					<div class="text-center p-t-136">
 						<a class="txt2"  href="javaascript:void(0)" id="credit">
-							versi 20.08.5 | &copy; 2019 ICT Bias Mandiri Group
+							versi 20.09.1 | &copy; 2019 ICT Bias Mandiri Group
 							<!-- <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i> -->
 						</a>
 					</div>

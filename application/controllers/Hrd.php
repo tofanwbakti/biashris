@@ -502,7 +502,7 @@ class Hrd extends CI_Controller
       $config ['upload_path']    = './uploads/documents/';
       $config['allowed_types']   = 'pdf'; // hanya file PDF
       // $config['allowed_types']   = 'pdf|jpg|jpeg|png';
-      $config['max_size']        = 1024; //allowed size 1Mb
+      $config['max_size']        = 2048; //allowed size 2Mb
       $config['file_name']       = $tipe.$id;
       $config['overwrite']       = TRUE;
 

@@ -100,10 +100,12 @@
         <div class="small-box bg-aqua">
           <div class="inner">
             <h3><?php $user = $this->fungsi->user_login()->id_kar;
+            $thismonth = gmdate("Y-m",time()+60*60*7);
             $this->db->where('id_kar',$user);
             $this->db->where('status',"Y");
+            $this->db->like('tgl',$thismonth);
             $this->db->from('tb_ijinsakit');
-              echo $this->db->count_all_results(); ?></h3>
+              echo $this->db->count_all_results(); ?> <sup style="font-size:15px"><?=gmdate("M-y",time()+60*60*7) ?></sup></h3>
             <p>Izin Sakit</p>
           </div>
           <div class="icon">
@@ -119,13 +121,15 @@
         <div class="small-box bg-green">
           <div class="inner">
             <h3><?php $user = $this->fungsi->user_login()->id_kar;
+            $thismonth = gmdate("Y-m",time()+60*60*7);
             $this->db->where('id_kar',$user);
+            $this->db->like('tanggal',$thismonth);
             $this->db->from('tb_ijinpulcep');
-              echo $this->db->count_all_results(); ?><sup style="font-size: 20px"></sup></h3>
+              echo $this->db->count_all_results(); ?> <sup style="font-size:15px"><?=gmdate("M-y",time()+60*60*7) ?></sup></h3>
             <p>Izin Pulang Cepat</p>
           </div>
           <div class="icon">
-            <i class="fa fa-umbrella "></i>
+            <i class="fa fa-share-square-o"></i>
           </div>
           <a href="<?= site_url('C_Personal/pulcep')?>" class="small-box-footer">
               Info Lebih <i class="fa fa-arrow-circle-right"></i>
@@ -137,9 +141,11 @@
         <div class="small-box bg-yellow">
           <div class="inner">
             <h3><?php $user = $this->fungsi->user_login()->id_kar;
+            $thismonth = gmdate("Y-m",time()+60*60*7);
             $this->db->where('id_kar',$user);
+            $this->db->like('tanggal',$thismonth);
             $this->db->from('tb_ijinkeluar');
-              echo $this->db->count_all_results(); ?></h3>
+              echo $this->db->count_all_results(); ?> <sup style="font-size:15px"><?=gmdate("M-y",time()+60*60*7) ?></sup></h3>
             <p>Izin Keluar Kantor</p>
           </div>
           <div class="icon">
@@ -155,16 +161,18 @@
         <div class="small-box bg-red">
           <div class="inner">
             <h3><?php $user = $this->fungsi->user_login()->id_kar;
+            $thismonth = gmdate("Y-m",time()+60*60*7);
             $this->db->where('id_kar',$user);
             $this->db->where('absen_status',"2");
+            $this->db->like('tgl',$thismonth);
             $this->db->from('tb_absensi');
-              echo $this->db->count_all_results(); ?>  <sup style="font-size:20px">X</sup></h3>
+              echo $this->db->count_all_results(); ?>  <sup style="font-size:15px"><?=gmdate("M-y",time()+60*60*7) ?></sup></h3>
             <p>Terlambat</p>
           </div>
           <div class="icon">
             <i class="fa fa-briefcase"></i>
           </div>
-          <a href="#" class="small-box-footer">
+          <a href="<?=site_url('C_Personal/ijinLambat') ?>" class="small-box-footer">
             Info Lebih <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
