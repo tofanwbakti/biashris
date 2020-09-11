@@ -1,4 +1,23 @@
 <!-- Content Header (Page header) -->
+<style>
+    .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:40px;
+        right:40px;
+        background-color:rgb(0, 127, 212);
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        box-shadow: 2px 2px 3px #999;
+    }
+
+    .my-float{
+        margin-top:20px;
+        font-size: 20px
+    }
+</style>
     <section class="content-header">
         <h1>
         Surat MC
@@ -21,6 +40,9 @@
     <!-- Main content -->
     <?php foreach($rowisak as $data) { } ?>
     <section class="invoice">
+    <a href="<?=site_url('C_personal/isak') ?>" class="float" data-toggle="tooltip" title="Kembali">
+        <i class="fa fa-undo my-float" ></i>
+    </a>
         <!-- title row -->
         <div class="row">
             <div class="col-xs-12">
@@ -35,12 +57,12 @@
             <div class="box"></div>
                 <embed src="<?php echo base_url(); ?>uploads/suratmc/<?= $data['suratmc'] ?>" type="application/pdf" width ="100%" height = "600px" >
             </div>
-            <div class="row no-print">
+            <!-- <div class="row no-print">
                 <div class="col-xs-12">
-                    <!-- <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a> -->
                     <a href="<?=site_url('C_personal/isak') ?>" class="btn btn-info"> <i class="fa fa-undo"></i> Kembali</a>
+                    
                 </div>
-            </div>
+            </div> -->
         </div><!-- /.row -->
 
         <!-- this row will not appear when printing -->

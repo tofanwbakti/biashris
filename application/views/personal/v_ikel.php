@@ -48,87 +48,122 @@
 <?php endif; ?>
 <!-- ./ Flash Data -->
 <!-- Tables  -->
-<!-- <div class="col-md-8"> -->
-<div class="box box-primary">
-    <div class="box-header">
-        <h3 class="box-title"> Riwayat Izin Keluar</h3>
-        <div class="pull-right">            
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjukan"><i class="fa fa-plus"></i>
-            Ajukan</button>                    
+<div class="box box-default box-solid">
+        <div class="box-header with-border">
+            <h3 class="box-title"><img src="<?=base_url(); ?>assets/images/icons/iconbmg.png" style="height:25px" alt="" class="img-fluid"> Log Keluar Masuk</h3>            
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <section class="col-lg-3">
+                    <div class="text-center">
+                        <a href="" class="btn btn-danger" style="width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px"><img src="<?=base_url('assets/images/fp.png')?>" alt="" style="height:90px;margin-top:30px"></a>
+                    </div>
+                </section>
+                <section class="col-lg-9">
+                    <table class="table table-responsive" id="table3">
+                        <thead class="">
+                            <tr class="">
+                                <th>#</th>
+                                <th>Tgl</th>
+                                <th>Jam Keluar</th>
+                                <th>Jam Masuk</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </section>
+            </div>
+        </div>
+        
+    </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title"> Riwayat Izin Keluar</h3>
+                <div class="pull-right">            
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjukan"><i class="fa fa-plus"></i>
+                    Ajukan</button>                    
+                </div>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="tablehistory" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Keperluan</th>
+                        <th width="110px">Action</th>
+                            <?php if (($this->fungsi->user_login()->id_lvl == "A4" ) || ($this->fungsi->user_login()->id_lvl == "A1" )) {
+                                echo "<th width='70px' style='text-align:center'> Atasan</th>";
+                            }?>
+                            <?php if (($this->fungsi->user_login()->id_lvl == "A2" ) || ($this->fungsi->user_login()->id_lvl == "A1" )){  
+                                echo "<th width='70px' style='text-align:center'> HRD</th>";
+                            }?>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1;
+                        foreach ($row->result() as $key => $data ) { ?>
+                        <tr <?= $data->status == "BISA" ? "class='success'" : null ?>>
+                            <td><?= $no++; ?>.</td>
+                            <!-- <td><?= $data->id_ikel ?></td> -->
+                            <td><?= $data->nickname ?></td>
+                            <td><?= date("d M Y",strtotime($data->tanggal) )?></td>
+                            <td><?= $data->jam ?></td>
+                            <td><?= $data->alasan ?></td>
+                            <td><a href="#" id="permit" data-toggle="modal" data-target="#detail" class="btn btn-info btn-xs btn-detail" data-id="<?=$data->id_ikel?>" data-tgl="<?= date("d F Y",strtotime($data->tanggal))?>" data-jam="<?=$data->jam?>" data-apv1="<?=$data->apv1?>" data-apv2="<?=$data->apv2?>" data-note="<?=$data->alasan?>" data-status="<?=$data->status?>"  data-fullname="<?=$data->fullname?>"  data-foto="<?=$data->foto?>"  data-email="<?=$data->email?>"    >Detail <i class="fa fa-question-circle"></i> </a>
+                            <?php if (($data->status == "N")){
+                                    if (($data->apv1 == "null") && ($data->apv2 == "null")){
+                                        echo "<a href='".site_url('C_Personal/batalIkel/').$data->id_ikel."' class='btn btn-danger btn-xs tombol-hapus'>Batal <i class='fa fa-trash'></i> </a>";}
+                                    else if(($this->fungsi->user_login()->id_lvl == "A2")||($this->fungsi->user_login()->id_lvl == "A1")&&($data->apv1 != "null") && ($data->apv2 == "null")){
+                                        echo "<a href='".site_url('C_Personal/batalIkel/').$data->id_ikel."' class='btn btn-danger btn-xs tombol-hapus'>Batal <i class='fa fa-trash'></i> </a>";
+                                    } 
+                                } else if  ($data->status == "C"){
+                                echo "<a href='#' class='btn btn-default btn-xs tombol-ccl'>Batal <i class='fa fa-trash'></i> </a>";} ?>
+                            </td>
+                            <!-- Proses aproval Atasan  -->
+                            <?php if (($this->fungsi->user_login()->id_lvl == "A4")||($this->fungsi->user_login()->id_lvl == "A1")) {
+                                if(($data->status == "N") && ($data->apv1 == "null")){ 
+                                    if($data->id_kar == $this->fungsi->user_login()->id_kar ){
+                                        echo "<td style='text-align:center'> <a href='javascript:void(0)' class='btn btn-default btn-xs tombol-apv' disabled >OK <i class='fa fa-thumbs-up'></i></a> </td>";
+                                    }else {
+                                        echo "<td style='text-align:center'> <a href='".site_url('C_Personal/apv1/').encrypt_url( $data->id_ikel)."' class='btn btn-success btn-xs tombol-apv'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
+                                    }
+                                    }else if(($data->status == "C") && ($data->apv1 == "null")){
+                                    echo "<td style='text-align:center'> <a href='#' class='btn btn-default btn-xs tombol-ccl'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
+                                    }else if($data->status == "Y"){echo "<td style='text-align:center'>$data->apv1</td>";
+                                    }else if (($data->status == "N") &&($data->apv1 != "null"))
+                                    {echo "<td style='text-align:center'>$data->apv1</td>"; 
+                                    } else if (($data->status == "C") &&($data->apv1 != "null"))
+                                    {echo "<td style='text-align:center'> <span class='label label-default'>$data->apv1</span></td>"; } 
+                            }?>
+                            <!-- Proses Aproval HRD -->
+                            <?php if (($this->fungsi->user_login()->id_lvl == "A2") || ($this->fungsi->user_login()->id_lvl == "A1")) { 
+                                if (($data->status == "N") && ($data->apv2 == "null")){
+                                    echo "<td style='text-align:center'> <a href='".site_url('C_Personal/apv2/').$data->id_ikel."' class='btn btn-success btn-xs tombol-apv'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
+                                    }else if($data->status == "C"){
+                                    echo "<td style='text-align:center'> <a href='#' class='btn btn-default btn-xs tombol-ccl'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
+                                    } else if ($data->apv2 != "null")
+                                    echo "<td  style='text-align:center'>$data->apv2</td>"; 
+                            }?>  
+                        </tr>
+                        <?php } ?>
+                    </tbody>
+                        
+                </table>
+            </div>
+                    
         </div>
     </div>
-    <div class="box-body table-responsive">
-        <table id="tablehistory" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nama</th>
-                <th>Tanggal</th>
-                <th>Jam</th>
-                <th>Keperluan</th>
-                <th width="110px">Action</th>
-                    <?php if (($this->fungsi->user_login()->id_lvl == "A4" ) || ($this->fungsi->user_login()->id_lvl == "A1" )) {
-                        echo "<th width='70px' style='text-align:center'> Atasan</th>";
-                    }?>
-                    <?php if (($this->fungsi->user_login()->id_lvl == "A2" ) || ($this->fungsi->user_login()->id_lvl == "A1" )){  
-                        echo "<th width='70px' style='text-align:center'> HRD</th>";
-                    }?>
-            </tr>
-            </thead>
-            <tbody>
-                <?php $no = 1;
-                foreach ($row->result() as $key => $data ) { ?>
-                <tr <?= $data->status == "BISA" ? "class='success'" : null ?>>
-                    <td><?= $no++; ?>.</td>
-                    <!-- <td><?= $data->id_ikel ?></td> -->
-                    <td><?= $data->nickname ?></td>
-                    <td><?= date("d M Y",strtotime($data->tanggal) )?></td>
-                    <td><?= $data->jam ?></td>
-                    <td><?= $data->alasan ?></td>
-                    <td><a href="#" id="permit" data-toggle="modal" data-target="#detail" class="btn btn-info btn-xs btn-detail" data-id="<?=$data->id_ikel?>" data-tgl="<?= date("d F Y",strtotime($data->tanggal))?>" data-jam="<?=$data->jam?>" data-apv1="<?=$data->apv1?>" data-apv2="<?=$data->apv2?>" data-note="<?=$data->alasan?>" data-status="<?=$data->status?>"  data-fullname="<?=$data->fullname?>"  data-foto="<?=$data->foto?>"  data-email="<?=$data->email?>"    >Detail <i class="fa fa-question-circle"></i> </a>
-                    <?php if (($data->status == "N")){
-                            if (($data->apv1 == "null") && ($data->apv2 == "null")){
-                                echo "<a href='".site_url('C_Personal/batalIkel/').$data->id_ikel."' class='btn btn-danger btn-xs tombol-hapus'>Batal <i class='fa fa-trash'></i> </a>";}
-                            else if(($this->fungsi->user_login()->id_lvl == "A2")||($this->fungsi->user_login()->id_lvl == "A1")&&($data->apv1 != "null") && ($data->apv2 == "null")){
-                                echo "<a href='".site_url('C_Personal/batalIkel/').$data->id_ikel."' class='btn btn-danger btn-xs tombol-hapus'>Batal <i class='fa fa-trash'></i> </a>";
-                            } 
-                        } else if  ($data->status == "C"){
-                        echo "<a href='#' class='btn btn-default btn-xs tombol-ccl'>Batal <i class='fa fa-trash'></i> </a>";} ?>
-                    </td>
-                    <!-- Proses aproval Atasan  -->
-                    <?php if (($this->fungsi->user_login()->id_lvl == "A4")||($this->fungsi->user_login()->id_lvl == "A1")) {
-                        if(($data->status == "N") && ($data->apv1 == "null")){ 
-                            if($data->id_kar == $this->fungsi->user_login()->id_kar ){
-                                echo "<td style='text-align:center'> <a href='javascript:void(0)' class='btn btn-default btn-xs tombol-apv' disabled >OK <i class='fa fa-thumbs-up'></i></a> </td>";
-                            }else {
-                                echo "<td style='text-align:center'> <a href='".site_url('C_Personal/apv1/').encrypt_url( $data->id_ikel)."' class='btn btn-success btn-xs tombol-apv'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
-                            }
-                            }else if(($data->status == "C") && ($data->apv1 == "null")){
-                            echo "<td style='text-align:center'> <a href='#' class='btn btn-default btn-xs tombol-ccl'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
-                            }else if($data->status == "Y"){echo "<td style='text-align:center'>$data->apv1</td>";
-                            }else if (($data->status == "N") &&($data->apv1 != "null"))
-                            {echo "<td style='text-align:center'>$data->apv1</td>"; 
-                            } else if (($data->status == "C") &&($data->apv1 != "null"))
-                            {echo "<td style='text-align:center'> <span class='label label-default'>$data->apv1</span></td>"; } 
-                    }?>
-                    <!-- Proses Aproval HRD -->
-                    <?php if (($this->fungsi->user_login()->id_lvl == "A2") || ($this->fungsi->user_login()->id_lvl == "A1")) { 
-                        if (($data->status == "N") && ($data->apv2 == "null")){
-                            echo "<td style='text-align:center'> <a href='".site_url('C_Personal/apv2/').$data->id_ikel."' class='btn btn-success btn-xs tombol-apv'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
-                            }else if($data->status == "C"){
-                            echo "<td style='text-align:center'> <a href='#' class='btn btn-default btn-xs tombol-ccl'  >OK <i class='fa fa-thumbs-up'></i></a> </td>";
-                            } else if ($data->apv2 != "null")
-                            echo "<td  style='text-align:center'>$data->apv2</td>"; 
-                    }?>  
-                </tr>
-                <?php } ?>
-            </tbody>
-                
-        </table>
-    </div>
-            
+    
 </div>
-<!-- </div> -->
 </section><!-- /.content -->
 <!-- FORM PENGAJUAN  -->
     <div id= "modalAjukan" class="modal fade" role="dialog">
