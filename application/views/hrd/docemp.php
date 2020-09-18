@@ -1,4 +1,24 @@
 <!-- Content Header (Page header) -->
+<style>
+    .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:40px;
+        right:40px;
+        background-color:rgb(0, 127, 212);
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        box-shadow: 2px 2px 3px #999;
+    }
+
+    .my-float{
+        margin-top:20px;
+        font-size: 20px
+    }
+</style>
+
 <section class="content-header">
     <h1> <i class="icon fa fa-file-pdf-o text-red"></i>
     Dokumen Kepegawaian
@@ -21,6 +41,9 @@
     <!-- Main content -->
     <?php foreach($rowdok as $data) {  ?>
     <section class="invoice">
+    <a href="<?=site_url('Hrd/infoKar/').encrypt_url($data['id_kar'])?>" class="float" data-toggle="tooltip" title="Kembali">
+        <i class="fa fa-undo my-float" ></i>
+    </a>
         <!-- title row -->
         <div class="row">
             <small class="pull-left text-muted" style="margin-left:15px"> Upload : <?=date('d F Y',strtotime($data['tgl_upload']))?></small>

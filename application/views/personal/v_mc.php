@@ -54,7 +54,7 @@
         </div>
         <!-- info row -->
         <div class="row invoice-info">
-            <div class="box"></div>
+            <div class="box">
                 <embed src="<?php echo base_url(); ?>uploads/suratmc/<?= $data['suratmc'] ?>" type="application/pdf" width ="100%" height = "600px" >
             </div>
             <!-- <div class="row no-print">
