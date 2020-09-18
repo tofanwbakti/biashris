@@ -493,7 +493,7 @@ function kontrakEOC(){
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer" id="btnUpdate" style="display:none">
+                    <div class="modal-footer" id="btnUpdate" >
                         <button type="reset" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
                         <button type="submit" name="update"  class="btn btn-success pull-right" ><i class="fa fa-check" ></i> Update</button>
                     </div>
@@ -513,20 +513,21 @@ function kontrakEOC(){
                     var durasi = $(this).data('durasi');
 
                     if($(this).data('statkar') == "T"){
-                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" onchange="muncul()" ><option value="T" selected>Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
+                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" ><option value="T" selected>Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
                     }else if ($(this).data('statkar') == "K"){
-                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" onchange="muncul()" ><option value="K" >Kontrak</option><option value="T">Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
+                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" ><option value="K" >Kontrak</option><option value="T">Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
                         
                     };
 
                     if($(this).data('periode')=="I"){
-                        $("#rowPeriode").html('<select name="periode" id="periode" class="form-control" onchange="muncul2()"><option class="label-success" value="I" selected>Ke - I</option><option value="II">Ke - II</option></select><input type="hidden" name="tipekon" value="R" class="form-control" style="height:20px" readonly>');
+                        $("#rowPeriode").html('<select name="periode" id="periode" class="form-control"><option class="label-success" value="I" selected>Ke - I</option><option value="II">Ke - II</option></select><input type="hidden" name="tipekon" value="R" class="form-control" style="height:20px" readonly>');
                         $("#tglawal,#tglakhir").attr("disabled",false);
                         
                         
                     }else if ($(this).data('periode')=="II"){
-                        $("#rowPeriode").html('<input type="text" name="periode" value="II" class="form-control" style="height:20px" readonly>');
-                        $("#tglawal,#tglakhir").attr("disabled",true);
+                        $("#rowPeriode").html('<input type="text" name="periode" value="II" class="form-control" style="height:20px" readonly> <input type="hidden" name="tipekon" value="R" class="form-control" style="height:20px" readonly>');
+                        // $("#tglawal,#tglakhir").attr("disabled",true);
+                        $("#tglawal,#tglakhir").attr("disabled",false);
                     };
                     
 
@@ -544,12 +545,11 @@ function kontrakEOC(){
                     var foto = $(this).data('foto');
                     var email = $(this).data('email');
                     var statkar = $(this).data('statkar');
-                    if($(this).data('statkar')=="T"){isi="Tetap";
-                        // $("#btnUpdate").attr("disabled",true);
-                    }
-                    else if ($(this).data('statkar')=="K"){isi="Kontrak";
-                        $("#btnUpdate").attr("disabled",false);
-                    };
+                    // if($(this).data('statkar')=="T"){isi="Tetap";
+                    // }
+                    // else if ($(this).data('statkar')=="K"){isi="Kontrak";
+                    //     $("#btnUpdate").attr("disabled",false);
+                    // };
                     $("#headModal").html('<div class="col-sm-2"><img style="width:70px;height:relative" src="<?php echo base_url();?>uploads/image/'+foto+'" class="img-rounded"  alt="User Image" /></div><div class="col-sm-7" style="text-align:left"><h3>'+fullname+'</h3><p><small>'+email+'</small></p></div><div><input type="text" class="btn btn-primary" style="height:30px;width:100px" value="'+isi+'" disabled></div>');
                     $(document).ready(function(){
                         $('#rowalasan').hide();

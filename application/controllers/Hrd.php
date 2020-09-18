@@ -1034,30 +1034,30 @@ class Hrd extends CI_Controller
       $durasi = $this->input->post('durasi');
       $algojo = $this->fungsi->user_login()->nickname;
 
-      if(($periode == "II")&& ($tipekon == "R")){
-      // array data untuk proses renewal kontrak
-      $data = array(
-         'periodepkwt' => $periode,
-         'durasi' => $durasi,
-         'kontrak' => $tipekon,
-         'start' => $tglawal,
-         'end' => $tglakhir,
-      );
+      if($tipekon == "R"){
+         // array data untuk proses renewal kontrak
+         $data = array(
+            'periodepkwt' => $periode,
+            'durasi' => $durasi,
+            'kontrak' => $tipekon,
+            'start' => $tglawal,
+            'end' => $tglakhir,
+         );
 
-      // array data untuk simpan history
-      $data3 = array(
-         'nip' => $nip,
-         'tipe' => $tipekon, // R : Renewal / Perpanjangan KOntrak / PKWT ke II
-         'pkwt' => $periode,
-         'awal' => $tglawal,
-         'akhir' => $tglakhir,
-         'durasi' => $durasi
-      );
-      
-         $this->M_Hrd->updateKontrak($id,$data,'tb_kontrak');
-         $this->M_Hrd->addHisKontrak('tb_hist_kontrak',$data3);; // menyimpan history perubahan kontrak
-         $this->session->set_flashdata('flash','Diubah');
-         redirect('Hrd/kontrak');
+         // array data untuk simpan history
+         $data3 = array(
+            'nip' => $nip,
+            'tipe' => $tipekon, // R : Renewal / Perpanjangan KOntrak / PKWT ke II
+            'pkwt' => $periode,
+            'awal' => $tglawal,
+            'akhir' => $tglakhir,
+            'durasi' => $durasi
+         );
+         
+            $this->M_Hrd->updateKontrak($id,$data,'tb_kontrak');
+            $this->M_Hrd->addHisKontrak('tb_hist_kontrak',$data3);; // menyimpan history perubahan kontrak
+            $this->session->set_flashdata('flash','Diubah');
+            redirect('Hrd/kontrak');
       }
       // Jika Status karyawan TETAP
       if($statkar == "T"){
