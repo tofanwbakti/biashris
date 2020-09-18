@@ -174,7 +174,7 @@
                                         <td >Tanggal Bergabung</td>
                                         <td>:</td>
                                         <?php //rowjoin get join date from table kontrak?>
-                                        <td><a href="javascript:void(0);" class="custom"><?php foreach($rowkar as $data) echo date("d F Y",strtotime($data['join_date'])); ?></a></td> 
+                                        <td><a href="javascript:void(0);" class="custom"><?php foreach($rowkar as $data) echo date("d F Y",strtotime($data['join_date'])); ?></a> <a href="" data-toggle="modal" data-target="#editJoinDate" id="updateJoin" data-id="<?= $data['id_kar']?>"><i class="fa fa-calendar"></i></a></td> 
                                     </tr>
                                     <tr>
                                         <td >SBU</td>
@@ -1006,3 +1006,45 @@
     }
     </script>
 <!-- ./ Add Document  -->
+
+<!-- Modal Edit Join Date -->
+    <div id= "editJoinDate" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="icon fa fa-edit text-blue" style="margin-right:10px"></i> Edit Tanggal Bergabung </h4>
+                </div>
+                <form action="<?=site_url('Hrd/updateJoinDate') ?>" method="post">
+                    <div class="modal-body">
+                        <div class="box box-primary">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="idKar" value="<?php foreach($rowkar as $data) echo $data['id_kar']; ?>" > 
+                                <label for="nip">NIP</label><small class="text-danger"> *</small>  
+                                <div class="input-group"> 
+                                    <input type="text" class="form-control" name="nip" value="<?php foreach($rowkon as $data) echo $data['nip']; ?>" readonly> 
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-barcode"></i>
+                                    </div>
+                                </div><!-- /.input group -->
+                            </div>
+                            <div class="form-group" id="sandbox-tanggal" >
+                                <label for="tglJoin"> Tanggal Bergabung</label>
+                                <div class="input-group date" >
+                                    <input type="text" class="form-control datepicker" name="tglJoin"  id="tglJoin" value="<?php foreach($rowkar as $data) echo date('d-m-Y', strtotime($data['join_date'])); ?>" readonly placeholder="Tgl Bergabung..">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>                                                
+                        </diV>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default pull-left" data-dismiss="modal" onclick="location.reload()" ><i class="fa fa-times"></i> Tutup</button>
+                        <button type="submit" name="simpan" class="btn btn-primary"><i class="fa fa-send"></i> Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- /. Modal Edit Join Date -->

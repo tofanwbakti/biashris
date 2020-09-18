@@ -578,6 +578,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			return $data->result_array();
 		}
 
+		// Update data Tgl Bergabung dari table karyawan
+		public function updateJoinDate($table,$data,$id)
+		{
+			$this->db->where('id_kar',$id);
+			$this->db->update($table,$data);
+		}
+
 		// ./ =============== INFO KARYAWAN =====================
 		
 		//Get Data to Generate NIP pada view Karyawan

@@ -536,6 +536,20 @@ class Hrd extends CI_Controller
       }
       
    }
+
+   // Update Tanggal Bergabung Karyawan (dari table karyawan)
+   public function updateJoinDate()
+   {
+      $id   = $this->input->post('idKar',TRUE);
+      $tgl   = $this->input->post('tglJoin',TRUE);
+      $tglpost = date('Y-m-d',strtotime($tgl));
+
+      $data = array ( 'join_date' => $tglpost);
+
+      $this->M_Hrd->updateJoinDate('tb_karyawan',$data,$id);; // menyimpan history perubahan kontrak
+      $this->session->set_flashdata('flash','Diubah');
+      redirect('Hrd/infoKar/'.encrypt_url($id));
+   }
 // ===================== ./ Halaman Info/Detail Karyawan ==============
 
 // ===================== Halaman Perusahaan / SBU ==============
