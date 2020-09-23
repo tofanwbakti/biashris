@@ -567,6 +567,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			return $data;
 		}
 
+		// Hapus DOcument Karyawan
+		public function delPegDoc($id,$table)
+		{
+			$this->db->where('id_doc',$id);
+			$this->db->delete($table);
+		}
+
 		// Get Dokumen Kepegawaian dari table tb_dockar di load pada halaman dok Emp
 		public function getPegDoc($id)
 		{

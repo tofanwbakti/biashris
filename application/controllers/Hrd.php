@@ -535,7 +535,24 @@ class Hrd extends CI_Controller
          </script>";
       }
       
+      
    }
+   
+   // Hapus Dokumen Kepegawaian
+   public function delPegDoc()
+   {
+      $id=decrypt_url($this->uri->segment(3));
+
+      $this->M_Hrd->delPegDoc($id,'tb_dockar');
+      if($this->db->affected_rows()){
+         $this->session->set_flashdata('flash','Dihapus');
+         redirect('Hrd/infoKar/'.encrypt_url($id));
+      }else {
+         $this->session->set_flashdata('flash_error','Dihapus');
+         redirect('Hrd/infoKar/'.encrypt_url($id));
+      }
+   }
+   
 
    // Update Tanggal Bergabung Karyawan (dari table karyawan)
    public function updateJoinDate()

@@ -39,6 +39,8 @@
 
 <!-- Flash Data -->
 <div class="karyflash" data-flashdata="<?=$this->session->flashdata('flash'); ?>"></div>
+<div class="flash-unit" data-flashdata="<?=$this->session->flashdata('flash'); ?>"></div>
+<div class="flash-err" data-flashdata="<?=$this->session->flashdata('flash_error'); ?>"></div>
 <!-- ./ Flash Data -->
 
 <!-- Main Row -->
@@ -256,7 +258,8 @@
                                         <th>No Dokumen</th>
                                         <th>Jenis Dokumen</th>                                        
                                         <th>Nama Dokumen</th>                                        
-                                        <th>Total Hal.</th>                                        
+                                        <th>Total Hal.</th>
+                                        <th><i class="fa fa-cog"></i></th>                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -268,6 +271,7 @@
                                         <td><?=$data['typedoc'] ?></td>
                                         <td><?=$data['namadoc'] ?></td>
                                         <td><?=$data['halaman'] ?></td>
+                                        <td><a href="<?=site_url('Hrd/delPegDoc/').encrypt_url($data['id_doc']) ?>" class="tombol-del"><i class="fa fa-trash text-danger" data-toggle="tooltip" title="Hapus"></i></a></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
