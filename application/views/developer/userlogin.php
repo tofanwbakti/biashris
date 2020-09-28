@@ -53,7 +53,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Email</th>
-                            <th>Status</th>
+                            <th width="20px">Status</th>
                             <!-- <th>On Version</th> -->
                         </tr>
                         </thead>
@@ -64,8 +64,8 @@
                             <td><?=$data->date_login?></td>
                             <td><?=$data->time_login?></td>
                             <td><?=$data->email?></td>
-                            <td><?=$data->status == "ON" ? "ON <a href='".site_url('Developer/turnOffLogin/').encrypt_url($data->email)."' class='tombol-off'
-                            ><i class='fa fa-power-off text-red pull-right'></i></a>" : $data->status ?> </td>
+                            <td class="text-center"><?=$data->status == "ON" ? "<a href='".site_url('Developer/turnOffLogin/').encrypt_url($data->email)."' class='tombol-off'
+                            ><i class='fa fa-power-off' style='font-size:16px'></i></a>" : "<i class='fa fa-power-off text-muted' style='font-size:16px' disabled></i>" ?> </td>
                         </tr>
                         <?php }?>
                         </tbody>
