@@ -40,4 +40,31 @@ class Developer extends CI_Controller{
       $this->session->set_flashdata('flash','Ditambahkan');
       redirect('Developer');
    }
+
+# Halaman Log User Login
+   public function logUserLogin()
+   {
+      $data = array (
+         'judul' => "BiasHRIS | Log User Login",
+         'row'   => $this->M_Dev->getLogin(),
+      );
+      $this->template->load('template', 'developer/userlogin',$data);
+      
+   }
+
+   // Turn OFF login user
+   public function turnOffLogin()
+   {
+      $email = decrypt_url($this->uri->segment(3));
+      // echo $email;
+      $data = array ('status' => "OFF");
+      $where = array ('email' => $email);
+
+      $query = $this->M_Dev->turnOffLogin('tb_login',$data,$where);
+      $this->session->set_flashdata('flash','Diubah');
+      redirect ('Developer/logUserLogin');
+
+   }
+# /. Halaman Log User Login
+
 }

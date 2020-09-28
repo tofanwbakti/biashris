@@ -12,12 +12,19 @@ document.onkeyup=function(e){
     if(e.which == 17)
     isCtrl=false;
 }
-
+// Disable CTRL + U dan CTRL + C
 document.onkeydown=function(e){
     if(e.which == 17)
     isCtrl=true;
-    if((e.which == 85) || (e.which == 67) && isCtrl == true)
+    if((e.which == 85) && isCtrl == true)
     {
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Tombol perintah dilarang!',
+        })
+        return false;
+    } else if((e.which == 67) && isCtrl == true){
         Swal.fire({
             type: 'error',
             title: 'Oops...',
