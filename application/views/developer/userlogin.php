@@ -43,6 +43,18 @@
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Log User Login</h3>
+                    <div class="pull-right" style="margin-left:20px">
+                        <!-- <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalTambah"><i class="fa fa-plus-square"></i>    Kontrak Baru </button> -->
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-print"style="margin-right:5px"> </i>  Print PDF <span class="caret" style="margin-left:3px"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="<?= site_url('LaporanPdf/laporanLoginToday')?>" target="_window"><i class="fa fa-file-pdf-o text-red"></i> Today</a></li>
+                                <li><a href="<?= site_url('LaporanPdf/laporanLoginMonthly')?>" target="_window"><i class="fa fa-file-pdf-o text-red"></i> This Month</a></li>
+                                <li><a href="<?= site_url('LaporanPdf/laporanLoginAll')?>" target="_window"><i class="fa fa-file-pdf-o text-red"></i> All</a></li>
+                            </ul>                                
+                        </div>
+                    </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="table-responsive">
