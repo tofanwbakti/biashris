@@ -90,6 +90,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
 				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
 				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
+			}else if($id2 == "SC"){
+				$this->db->where('tb_ijinkeluar.status !=', "C");
 			}
 			$query = $this->db->get();
 			return $query;

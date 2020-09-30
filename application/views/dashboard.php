@@ -209,7 +209,7 @@
                     <td><?= $data->nickname ?></td>
                     <td><?= date("d F Y",strtotime($data->tanggal) )?></td>
                     <td><?= $data->jam ?></td>
-                    <td><?= $data->alasan ?> </td>
+                    <td><?= $data->alasan ?>  <a href="#" id="permit" data-toggle="modal" data-target="#detail" class="btn-detail" data-id="<?=$data->id_ikel?>" data-tgl="<?= date("d F Y",strtotime($data->tanggal))?>" data-jam="<?=$data->jam?>" data-apv1="<?=$data->apv1?>" data-apv2="<?=$data->apv2?>" data-note="<?=$data->alasan?>" data-status="<?=$data->status?>"  data-fullname="<?=$data->fullname?>"  data-foto="<?=$data->foto?>"  data-email="<?=$data->email?>"    > <i class="fa fa-question-circle pull-right" data-toggle="tooltip" title="Detail"></i> </a></td>
                     <td> <?php if($data->status == "N"){
                         echo "<i class='fa fa-thumbs-o-down text-red' style='font-size:20px'></i>";
                     }else echo "<i class='fa fa-thumbs-o-up text-green' style='font-size:20px'></i>"; ?>  </td>                   
@@ -331,3 +331,96 @@
 </div>
 <?php } ?>
 </section><!-- /.content -->
+
+
+<!-- Modal Detail  -->
+    <div id= "detail" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-share"></i> Detail Pengajuan Izin </h4>
+                </div>
+                <!-- <form action="<?=site_url('C_Personal/delIsak/')?>" method="post" name="delForm"> -->
+                <div class="modal-body" id="detailBody">
+                    <div class="box-body">
+                        <div class="row" id="headModal">
+                            <!-- <div class="col-sm-2"><img style="width:70px;height:relative" src="<?php echo base_url();?>uploads/image/<?=$this->fungsi->user_login()->foto ?>" class="img-thumnail"  alt="User Image" /></div> -->
+                            <!-- <div class="col-sm-7" style="text-align:left"><h3><?=$this->fungsi->user_login()->fullname ?></h3> <p><small><?=$this->fungsi->user_login()->email ?></small></p></div> -->
+                            <input type="hidden" id="idsakit" name="idsakit">
+                            <!-- <div class="col-sm-3 detail" ><input type="text" class="btn btn-primary" style="height:6px;width:100px" id="apv" disabled></div> -->
+                        </div>
+                        <table class="table table-bordeless">
+                            <tr>
+                                <td>Izin Tanggal</td>
+                                <td>:</td>
+                                <td><input type="text" id="tglijin" class="form-control" style="height:20px" disabled></td>
+                            </tr>                            
+                            <tr>
+                                <td>Jam</td>
+                                <td>:</td>
+                                <td><input type="text" id="jamijin" class="form-control"  style="height:20px" disabled></td>
+                            </tr>
+                            <tr>
+                                <td>Keterangan</td>
+                                <td>:</td>
+                                <td><input type="text" id="alasan" class="form-control" style="height:20px" disabled></td>
+                            </tr>
+                            <tr>
+                                <td>Aproval Atasan</td>
+                                <td>:</td>
+                                <td><input type="text" id="bos" class="form-control" style="height:20px" disabled></td>
+                            </tr>
+                            <tr class="info">
+                                <td>Diproses Oleh</td>
+                                <td>:</td>
+                                <td><input type="text" id="hrd" class="form-control" style="height:20px" disabled></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="reset" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button> 
+                <!-- <a href="<?=site_url('C_Personal/batalIkel/')?>'+id+'" class="btn btn-danger tombol-hapus"><i class="icon fa fa-trash"></i>Batal</a> -->
+                </div>
+                <!-- </form> -->
+            </div>
+            <script src="<?php echo base_url();?>assets/js/jquery-1.10.0.min.js" type="text/javascript"></script>
+            <script type="text/javascript" >
+                $(document).on("click","#permit",function(){
+                    var id = $(this).data('id');
+                    var jam = $(this).data('jam');
+                    var tgl = $(this).data('tgl');
+                    var hrd = $(this).data('hrd');
+                    var alasan = $(this).data('note');
+                    var apv1 = $(this).data('apv1');
+                    var apv2 = $(this).data('apv2');
+                    // var apv = $(this).data('status');
+                    if ($(this).data('status') == "Y") { isi ="DISETUJUI";}
+                    else if ($(this).data('status') == "N") {isi = "MENUNGGU";}
+                    else {isi = "DIBATALKAN";}
+
+                    $("#detailBody #idsakit").val(id);
+                    $("#detailBody #jamijin").val(jam);
+                    $("#detailBody #tglijin").val(tgl);
+                    $("#detailBody #alasan").val(alasan);
+                    $("#detailBody #apv").val(isi);
+                    $("#detailBody #bos").val(apv1);
+                    $("#detailBody #hrd").val(apv2);
+                });
+
+                // $(document).ready(function(){
+                    $('.btn-detail').on("click", function(){
+                        var id = $(this).data('id');
+                        var fname = $(this).data('fullname');
+                        var foto = $(this).data('foto');
+                        var email = $(this).data('email');
+                        $("#headModal").html('<div class="col-sm-2"><img style="width:70px;height:relative" src="<?php echo base_url();?>uploads/image/'+foto+'" class="img-rounded"  alt="User Image" /></div><div class="col-sm-7" style="text-align:left"><h3>'+fname+'</h3><p><small>'+email+'</small></p></div><div class="col-sm-3" ><input type="text" class="btn btn-primary" style="height:6px;width:100px" id="apv" disabled></div>');
+                        
+                    });
+                // })
+            </script>
+        </div>
+    </div>
+
+<!-- ./ Modal Detail  -->

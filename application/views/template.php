@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css">
         <!-- Bootstrap time Picker -->
-        <link href="<?php echo base_url();?>assets/AdminLTE-2.0.5/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
+        <link href="<?php echo base_url();?>assets/AdminLTE-2.0.5/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
         <!-- Sweer Alert -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
         <!-- Accordion style -->
