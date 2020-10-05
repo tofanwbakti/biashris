@@ -47,7 +47,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Example: ex@abc.xyz">
-						<input class="input100" type="text" name="email" placeholder="Email">
+						<input class="input100" type="text" name="email" id="email" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -55,7 +55,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pass" id="pass" placeholder="Password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -63,6 +63,7 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
+						<!-- <button class="login100-form-btn" type="submit" name="login" onclick="this.href"> -->
 						<button class="login100-form-btn" type="submit" name="login">
 							Login
 						</button>
@@ -136,6 +137,17 @@
 				timer: 5000
 				})
 		});
+
+		// function sendMail(){
+		// 	var email = document.getElementById('email').value;
+		// 	var pass = document.getElementById('pass').value;
+
+		// 	if((email != "") && (pass != "")){
+		// 		<?= "<a href='".site_url('Dashboard/sendMail')."'></a>";?>
+		// 	}else{
+		// 		alert('COba coba isi kosong');
+		// 	}
+		// }
 	</script>
 <!--===============================================================================================-->
 	<script src="<?php echo base_url();?>assets/js/main.js"></script>

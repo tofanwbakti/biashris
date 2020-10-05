@@ -839,6 +839,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absensi.id_kar','left');
 			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
 			$this->db->like('tb_absensi.tgl',$key);
+			$this->db->where('tb_kontrak.kontrak !=',"F");
 			$this->db->order_by('tb_absensi.id_absen',"DESC");
 			$data =  $this->db->get();
 			return $data->result_array();

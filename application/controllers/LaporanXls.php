@@ -100,19 +100,23 @@ class LaporanXls extends CI_Controller{
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$numrow, date('d M Y', strtotime($data['tgl'])));      
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data['jam_masuk']);           
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data['jam_pulang']);    
-            if($data['absen_status'] == "2") {$ket="Terlambat";}
+            if($data['absen_status'] == "2") {$ket="Terlambat";} else { $ket ="-";}
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $ket);    
             if($data['absen_status'] == "2") {
                 $jmIn = date_create($data['jam_masuk']);//jam realtime karyawan masuk
-                $jmDef = date_create('8:00:00'); //defualt jam masuk
-                $jmFdy = date_create('07:30:00'); //default jam masuk hari jumat
+                $jmDef = date_create('8:05:00'); //defualt jam masuk
+                $jmFdy = date_create('07:35:00'); //default jam masuk hari jumat
                 if($data['hari']=="Friday"){
                     $beda = date_diff($jmIn,$jmFdy);
                 }else {
                     $beda = date_diff($jmIn,$jmDef);
                 }
             }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $beda->h.' jam, '. $beda->i.' menit');       
+            if($data['absen_status'] == "2"){
+                $spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $beda->h.' jam, '. $beda->i.' menit'); 
+            }else {
+                $spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$numrow, "-");
+            }        
             // echo $beda->h,'jam, '. $beda->i.'menit';
 
             $no++; // Tambah 1 setiap kali looping      

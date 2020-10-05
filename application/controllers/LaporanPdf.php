@@ -786,6 +786,7 @@ class LaporanPdf extends CI_Controller{
         $this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absensi.id_kar','left');
         $this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
         $this->db->like('tb_absensi.tgl',$key);
+        $this->db->where('tb_kontrak.kontrak !=',"F");
         $this->db->order_by('tb_absensi.id_absen',"DESC");
         $dtabsen =  $this->db->get()->result();
 
@@ -854,8 +855,8 @@ class LaporanPdf extends CI_Controller{
         $no = 1;
         foreach ($dtabsen as $data){
             $jmIn = date_create($data->jam_masuk);//jam realtime karyawan masuk
-            $jmDef = date_create('8:00:00'); //defualt jam masuk
-            $jmFdy = date_create('07:30:00'); //default jam masuk hari jumat
+            $jmDef = date_create('8:05:00'); //defualt jam masuk
+            $jmFdy = date_create('07:35:00'); //default jam masuk hari jumat
             if($data->hari =="Friday"){
                 $beda = date_diff($jmIn,$jmFdy);
             }else {
@@ -868,7 +869,7 @@ class LaporanPdf extends CI_Controller{
             $pdf->Cell(30,7,date("d M Y",strtotime($data->tgl)),1,0,'C');
             $pdf->Cell(25,7,$data->jam_masuk,1,0,'C');
             $pdf->Cell(25,7,$data->jam_pulang,1,0,'C');
-            if($data->absen_status == "2"){ $stt = "Terlambat";}
+            if($data->absen_status == "2"){ $stt = "Terlambat";}else{$stt = "-";}
             $pdf->Cell(40,7,$stt,1,1,'C');
         }
 
