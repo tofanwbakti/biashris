@@ -225,7 +225,7 @@ function kontrakEOC(){
                                     <td><?= $data['end'] == "0000-00-00" ? "-" : date("d M Y",strtotime($data['end'])) ?></td>
                                     <td width="20px"><?=$data['durasi'] == "Null" ? "-" : $data['durasi']." bln" ?></td>
                                     <td><a href="#" class="eoc-detail" id="detailEoc" data-toggle="modal" data-target="#modalDetail" data-idkon=<?=$data['id_kon']?> data-periode="<?=$data['periodepkwt']?>"  data-kontrak=<?=$data['kontrak']?> data-start=<?=date("d-m-Y",strtotime($data['start']))?> data-end=<?=date("d-m-Y",strtotime($data['end']))?> data-nip=<?=$data['nip']?> data-fullname="<?=$data['fullname']?>" data-statkar="<?=$data['stat_kar']?>" data-foto="<?=$data['foto']?>" data-email=<?=$data['email']?> data-durasi=<?=$data['durasi']?>> 
-                                    <i class="icon fa fa-edit text-primary" data-tooltip="tooltip" title="Update"></i></a>
+                                    <i class="icon fa fa-edit text-primary" data-toggle="tooltip" title="Update"></i></a>
                                     </td>
                                     <!-- <td><?php $tgl= strtotime($data['end']);
                                     $today = strtotime (gmdate("Y-m-d", time()+60*60*7));
@@ -513,9 +513,9 @@ function kontrakEOC(){
                     var durasi = $(this).data('durasi');
 
                     if($(this).data('statkar') == "T"){
-                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" ><option value="T" selected>Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
+                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" onchange="muncul()"><option value="T" selected>Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
                     }else if ($(this).data('statkar') == "K"){
-                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" ><option value="K" >Kontrak</option><option value="T">Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
+                        $("#rowStatus").html('<select name="statkar" id="statkar" class="form-control" onchange="muncul()"><option value="K" >Kontrak</option><option value="T">Tetap</option><option value="F">Finish</option></select><input type="hidden" name="today" value="<?=gmdate("Y-m-d",time()+60*60*7)?>" class="form-control" style="height:20px" readonly> ');
                         
                     };
 
@@ -545,11 +545,11 @@ function kontrakEOC(){
                     var foto = $(this).data('foto');
                     var email = $(this).data('email');
                     var statkar = $(this).data('statkar');
-                    // if($(this).data('statkar')=="T"){isi="Tetap";
-                    // }
-                    // else if ($(this).data('statkar')=="K"){isi="Kontrak";
-                    //     $("#btnUpdate").attr("disabled",false);
-                    // };
+                    if($(this).data('statkar')=="T"){isi="Tetap";
+                    }
+                    else if ($(this).data('statkar')=="K"){isi="Kontrak";
+                        $("#btnUpdate").attr("disabled",false);
+                    };
                     $("#headModal").html('<div class="col-sm-2"><img style="width:70px;height:relative" src="<?php echo base_url();?>uploads/image/'+foto+'" class="img-rounded"  alt="User Image" /></div><div class="col-sm-7" style="text-align:left"><h3>'+fullname+'</h3><p><small>'+email+'</small></p></div><div><input type="text" class="btn btn-primary" style="height:30px;width:100px" value="'+isi+'" disabled></div>');
                     $(document).ready(function(){
                         $('#rowalasan').hide();

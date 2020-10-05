@@ -1051,33 +1051,33 @@ class Hrd extends CI_Controller
       $durasi = $this->input->post('durasi');
       $algojo = $this->fungsi->user_login()->nickname;
 
-      if($tipekon == "R"){
-         // array data untuk proses renewal kontrak
-         $data = array(
-            'periodepkwt' => $periode,
-            'durasi' => $durasi,
-            'kontrak' => $tipekon,
-            'start' => $tglawal,
-            'end' => $tglakhir,
-         );
+      // echo $tipekon."|".$statkar;
 
-         // array data untuk simpan history
-         $data3 = array(
-            'nip' => $nip,
-            'tipe' => $tipekon, // R : Renewal / Perpanjangan KOntrak / PKWT ke II
-            'pkwt' => $periode,
-            'awal' => $tglawal,
-            'akhir' => $tglakhir,
-            'durasi' => $durasi
-         );
-         
-            $this->M_Hrd->updateKontrak($id,$data,'tb_kontrak');
-            $this->M_Hrd->addHisKontrak('tb_hist_kontrak',$data3);; // menyimpan history perubahan kontrak
-            $this->session->set_flashdata('flash','Diubah');
-            redirect('Hrd/kontrak');
-      }
-      // Jika Status karyawan TETAP
-      if($statkar == "T"){
+      // if($tipekon == "R"){
+      //    // array data untuk proses renewal kontrak
+      //    $data = array(
+      //       'periodepkwt' => $periode,
+      //       'durasi' => $durasi,
+      //       'kontrak' => $tipekon,
+      //       'start' => $tglawal,
+      //       'end' => $tglakhir,
+      //    );
+
+      //    // array data untuk simpan history
+      //    $data3 = array(
+      //       'nip' => $nip,
+      //       'tipe' => $tipekon, // R : Renewal / Perpanjangan KOntrak / PKWT ke II
+      //       'pkwt' => $periode,
+      //       'awal' => $tglawal,
+      //       'akhir' => $tglakhir,
+      //       'durasi' => $durasi
+      //    );         
+      //       $this->M_Hrd->updateKontrak($id,$data,'tb_kontrak');
+      //       $this->M_Hrd->addHisKontrak('tb_hist_kontrak',$data3);; // menyimpan history perubahan kontrak
+      //       $this->session->set_flashdata('flash','Diubah');
+      //       redirect('Hrd/kontrak');
+      // }
+      if($statkar == "T"){// Jika Status karyawan TETAP
          $data=array(
             'periodepkwt' => "",
             'durasi' => "",
@@ -1101,10 +1101,7 @@ class Hrd extends CI_Controller
          $this->M_Hrd->addHisKontrak('tb_hist_kontrak',$data3); // menyimpan history perubahan kontrak
          $this->session->set_flashdata('flash','Diubah');
          redirect('Hrd/kontrak');
-      }
-
-      // Jika Status Karyawan FINISH
-      if ($statkar == "F"){
+      }else if ($statkar == "F"){ // Jika Status Karyawan FINISH
          // array data table kontrak (tb_kontrak)
          $data=array(            
             'kontrak' => "F", 
@@ -1138,7 +1135,32 @@ class Hrd extends CI_Controller
          $this->M_Hrd->addKontrakEoc('tb_kontrak_eoc',$data4); // menyimpan EOC kontrak karyawan pada table tb_kontrak_eoc
          $this->session->set_flashdata('flash','Diubah');
          redirect('Hrd/kontrak');
+      }else if ($statkar == "K"){
+         //array data untuk proses renewal kontrak
+         $data = array(
+            'periodepkwt' => $periode,
+            'durasi' => $durasi,
+            'kontrak' => $tipekon,
+            'start' => $tglawal,
+            'end' => $tglakhir,
+         );
+
+         // array data untuk simpan history
+         $data3 = array(
+            'nip' => $nip,
+            'tipe' => $tipekon, // R : Renewal / Perpanjangan KOntrak / PKWT ke II
+            'pkwt' => $periode,
+            'awal' => $tglawal,
+            'akhir' => $tglakhir,
+            'durasi' => $durasi
+         );         
+            $this->M_Hrd->updateKontrak($id,$data,'tb_kontrak');
+            $this->M_Hrd->addHisKontrak('tb_hist_kontrak',$data3);; // menyimpan history perubahan kontrak
+            $this->session->set_flashdata('flash','Diubah');
+            redirect('Hrd/kontrak');
       }
+
+      
    }
 
    // Update data kontrak untuk Mengakhiri kontrak

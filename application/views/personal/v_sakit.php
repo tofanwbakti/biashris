@@ -163,8 +163,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="suratmc"><small class="text-danger">*</small>  Upload Surat MC</label>
-                                <input type="file" name="suratmc" id="suratmc" required>
-                                <small class="text-muted">maks. upload 2MB, format file .pdf</small> 
+                                <input type="file" name="suratmc" id="suratmc" onchange="return validasiFile()" required>
+                                <small class="text-muted" style="font-style:italic">maks. upload 2MB, format file .pdf</small> 
+                                <p><small id="text-pdf" class="text-muted text-red" style="font-style:italic;display:none"> Format file harus .pdf !!!</small></p>
+                                <p ><small id="text-size" class="text-muted text-red" style="font-style:italic;display:none"> File melebihi batas 2MB !!!</small></p>
                             </div>
                         </div><!-- /.box-body -->
                         <div class="modal-footer">
@@ -178,6 +180,35 @@
             </div>
         </div>
     </div>
+    <script>
+        // $("#text-pdf").hide();
+    function validasiFile(){
+            // $("#loaderIcon").show();
+        var inputFile = document.getElementById('suratmc');
+        var pathFile = inputFile.value;
+        // var ekstensiOk = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        var ekstensiOk = /(\.pdf)$/i;
+        if(!ekstensiOk.exec(pathFile)){
+            // alert('Silakan upload file yang memiliki ekstensi .pdf');
+            // $("#loaderIcon").hide();
+            $("#text-pdf").show();
+            inputFile.value = '';
+            return false;
+        }else{
+            $("#text-pdf").hide();
+        }
+
+        if(inputFile.files[0].size > 2000000){
+            // alert ("File melebihi batas 2MB");
+            $("#text-size").show();
+            inputFile.value = '';
+            return false;
+        }else {
+            $("#text-size").hide();
+        }
+    }
+
+    </script>
 <!-- ./ Modal FORM PENGAJUAN=========================================================== -->
 
 <!-- Modal Aproval -->
