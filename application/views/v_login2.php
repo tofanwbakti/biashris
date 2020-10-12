@@ -25,6 +25,7 @@
 <!-- ============================================================================================= -->
 <!-- Custom CSS -->
 <link href="<?php echo base_url();?>assets/css/mycustom.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 	

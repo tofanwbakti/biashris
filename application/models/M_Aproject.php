@@ -518,6 +518,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			return $data->result_array();
 		}
 		
+	// ==================== Halaman DASHBOARD =========================
 		// Get Data Absen
 		public function getAbsen($idkar)
 		{
@@ -557,6 +558,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->update($table,$data);
 		}
 
+
+	// Get data tb_absen_istirahat untuk table record istirahat
+		public function getDtBreak($idkar)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->where('tb_absen_istirahat.id_kar',$idkar);
+			$this->db->order_by('id_break','DESC');
+			$data = $this->db->get();
+			return $data->result_array();
+		}
+
+	// Get data tb_absen_istirahat untuk tombol istirahat
+		public function getBreak($idkar)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->where('tb_absen_istirahat.id_kar',$idkar);
+			$this->db->order_by('id_break','DESC');
+			$this->db->limit(1);
+			$data = $this->db->get();
+			return $data->result_array();
+		}
+
+		// Proses Istirahat dimulai
+		// Absen IN
+		public function breakOn($table,$data)
+		{
+			$insert = $this->db->insert($table,$data);
+			return $data;
+		}
+
+		public function breakOff($where,$data,$table)
+		{
+			$this->db->where($where);
+			$this->db->update($table,$data);
+		}
+
+
+	// ============================ /. Halaman DASHBOARD ====================================
 	// ============================ KEPEGAWAIAN ====================================
 		// Get Data Karyawan
 		public function getInfoKar($id)

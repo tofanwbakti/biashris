@@ -424,7 +424,7 @@ public function apvAlpa($id)
       
    }
 
-// ============================ DASHBOARD ====================================
+// ============================ Data Pribadi ====================================
 // Cetak Data Pribadi =>> Page data pribadi
    function data_pri()
    {
@@ -699,7 +699,7 @@ public function apvAlpa($id)
       );
       $this->template->load('template','personal/v_mc',$data);
    }
-
+#=============================== Halaman Dashboard ===============================
    // Proses Absensi Hadir
    public function absenHadir()
    {
@@ -767,6 +767,62 @@ public function apvAlpa($id)
          redirect ('dashboard');
       }
    }
+
+   // Proses Absen Istirahat Mulai
+   public function breakOn()
+   {
+      $breakstart = gmdate("G:i:s", time()+60*60*7);
+      $tgl = gmdate("Y-m-d", time()+60*60*7);
+      $idkar = $this->fungsi->user_login()->id_kar;
+      $ip = $this->input->ip_address();
+      $status = "ON";
+      
+      $data = array (
+         'tgl_break'    => $tgl,
+         'start_break'  => $breakstart,
+         'end_break'    => "NULL",
+         'id_kar'       => $idkar,
+         'break_status' => $status,
+         'ipaddress'    => $ip
+      );
+
+      $cek = $this->db->query("SELECT * FROM tb_absen_istirahat WHERE tgl_break='$tgl' AND id_kar='$idkar' ");
+      if($cek->num_rows() != 0){
+         $this->session->set_flashdata('flash_break_error','Ditambahkan');
+         redirect ('dashboard');
+      }else {
+         $query = $this->M_Aproject->breakOn('tb_absen_istirahat',$data);
+         $this->session->set_flashdata('flash_break','Ditambahkan');
+         redirect ('dashboard');
+      }
+   }
+
+   // Proses Absen istirahat Selesai
+   public function breakOff($id)
+   {
+      $id = decrypt_url($id);
+      $breakend = gmdate("G:i:s", time()+60*60*7);
+      $status = "OFF";
+
+      $data = array (
+         'end_break'    => $breakend,
+         'break_status' => $status
+      );
+      $where = array ('id_break' => $id);
+
+      $cek = $this->db->query("SELECT * FROM tb_absen_istirahat WHERE id_break=$id AND end_break='NULL' ");
+      if($cek->num_rows() <= 0){
+         $this->session->set_flashdata('flash_break_error','Ditambahkan');
+         redirect ('dashboard');
+      }else {
+         $query = $this->M_Aproject->breakOff($where,$data,'tb_absen_istirahat');
+         $this->session->set_flashdata('flash_break','Ditambahkan');
+         redirect ('dashboard');
+      }
+   }
+
+   #======================= /. Halaman Dashboard =======================
+
    // ========================== KEPEGAWAIAN =============================== //
    public function kepeg()
    {

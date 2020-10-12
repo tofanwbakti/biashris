@@ -644,6 +644,7 @@ class LaporanPdf extends CI_Controller{
         /** ./ TEMPLATE FOOTER dan output */
     }
 
+#Halaman Laporan Absensi
     // Laporan Hadir Hari ini
     public function laporanHadirSkrg()
     {
@@ -655,6 +656,7 @@ class LaporanPdf extends CI_Controller{
         $this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
         $this->db->where('tb_absensi.tgl',$today);
         $this->db->where('tb_karyawan.id_jab !=',"J000");
+        $this->db->where('tb_kontrak.kontrak !=',"F");
         $this->db->order_by('id_absen','DESC');
         $datahdr = $this->db->get()->result();
 
@@ -678,7 +680,7 @@ class LaporanPdf extends CI_Controller{
 
         // Table
         // Header Table
-        $pdf->SetLeftMargin('20');
+        $pdf->SetLeftMargin('10');
         $pdf->Cell(190,7,'',0,1,'J');
         $pdf->SetFillColor(158, 156, 156);
         $pdf->SetLineWidth(.3);
@@ -686,7 +688,8 @@ class LaporanPdf extends CI_Controller{
         $pdf->Cell(15,8,'No',1,0,'C',1);
         $pdf->Cell(30,8,'NIP',1,0,'C',1);        
         $pdf->Cell(55,8,'Nama',1,0,'C',1);
-        $pdf->Cell(30,8,'Masuk',1,0,'C',1);
+        $pdf->Cell(25,8,'Masuk',1,0,'C',1);
+        $pdf->Cell(25,8,'Pulang',1,0,'C',1);
         $pdf->Cell(40,8,'Ip Address',1,1,'C',1);
         $no = 1;
         foreach ($datahdr as $data){
@@ -696,6 +699,7 @@ class LaporanPdf extends CI_Controller{
             $pdf->Cell(55,7,$data->fullname,1,0,'C');
             // $pdf->Row(55,7,$data->fullname,1,0,'C');
             $pdf->Cell(30,7,$data->jam_masuk,1,0,'C');
+            $pdf->Cell(30,7,$data->jam_pulang,1,0,'C');
             $pdf->Cell(40,7,$data->ipaddress,1,1,'C');
         }
 
@@ -717,6 +721,7 @@ class LaporanPdf extends CI_Controller{
         $this->db->where('tb_absensi.tgl',$today);
         $this->db->where('tb_absensi.absen_status',"2");
         $this->db->where('tb_karyawan.id_jab !=',"J000");
+        $this->db->where('tb_kontrak.kontrak !=',"F");
         $this->db->order_by('id_absen','DESC');
         $datahdr = $this->db->get()->result();
 
@@ -771,8 +776,8 @@ class LaporanPdf extends CI_Controller{
         }
 
         /** TEMPLATE FOOTER dan output */ // harus dipakai di setiap bentuk laporan
-            $pdf->AliasNbPages();
-            $pdf->Output();
+        $pdf->AliasNbPages();
+        $pdf->Output();
         /** ./ TEMPLATE FOOTER dan output */
     }
 

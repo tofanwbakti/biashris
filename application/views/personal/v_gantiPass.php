@@ -199,7 +199,7 @@ function cekCocok(){
                                 <div class="form-group">
                                     <div class="input-group">
                                         <input type="hidden" name="email" value="<?= $this->fungsi->user_login()->email?>">
-                                        <input class="form-control" type="password" id="oldpass" style="width:200px" placeholder="Password Lama" onblur="checkOldPass()" utocomplete="off" required>
+                                        <input class="form-control" type="password" id="oldpass" style="width:200px" placeholder="Password Lama" onblur="checkOldPass()" autocomplete="off" required>
                                         <div class="input-group-addon" id="btn_old" >
                                             <a href="javascript:void(0)" onclick="myFunction3()"><i class="fa fa-eye-slash text-black" aria-hidden="true"></i></a>
                                         </div>

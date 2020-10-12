@@ -23,7 +23,9 @@ class Dashboard extends CI_Controller{
          'judul' => "BiasHRIS | Dashboard",
          'row' => $this->M_Aproject->get_ikel(),
          'rowabs' => $this->M_Aproject->getAbsen($idkar),
-         'rowpab' => $this->M_Aproject->getProsen($idkar)
+         'rowpab' => $this->M_Aproject->getProsen($idkar),
+         'rowbreak' => $this->M_Aproject->getBreak($idkar),
+         'rowDtBreak' => $this->M_Aproject->getDtBreak($idkar),
       );
       $this->template->load('template', 'dashboard',$data);
    } 
