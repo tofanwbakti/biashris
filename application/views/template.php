@@ -298,6 +298,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a href="#"><i class="fa fa-file-text text-danger"></i> Laporan<i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="<?= site_url('Hrd/laporanAbsensi')?>"><i class="fa fa-file-text-o text-danger"></i> Absensi</a></li>
+                        <li><a href="<?= site_url('Hrd/laporanIstirahat')?>"><i class="fa fa-file-text-o text-danger"></i> Istirahat</a></li>
                         <li><a href="<?= site_url('Hrd/laporanIzin')?>"><i class="fa fa-file-text-o text-danger"></i> Izin</a></li>
                         <li><a href="<?= site_url('Hrd/laporanKontrak')?>"><i class="fa fa-file-text-o text-danger"></i> Kontrak Karyawan</a></li>
                     </ul>

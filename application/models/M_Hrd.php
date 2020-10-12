@@ -861,6 +861,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 
 		// ===================== /. HALAMAN Laporan /. Absensi Karyawan ALL ====================
+
+		// ============ HALAMAN LAPORAN ISTIRAHAT ========================
+		// Get Semua Data Istirahat Karyawan
+		public function getBreakAll()
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+			$this->db->where('tb_karyawan.id_kar !=',"1");
+			$this->db->order_by('tb_absen_istirahat.id_break',"DESC");
+			$data =  $this->db->get();
+			return $data->result_array();
+		}
+
+		// Get Semua data istirahat Karyawan Hari ini
+		public function getBreakToday($today)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+			$this->db->where('tb_absen_istirahat.tgl_break',$today);
+			$this->db->where('tb_karyawan.id_kar !=',"1");
+			$this->db->order_by('tb_absen_istirahat.id_break',"DESC");
+			$data =  $this->db->get();
+			return $data->result_array();
+		}
+
+		// ============ /. HALAMAN LAPORAN ISTIRAHAT ========================
 		
 		// ===================== HALAMAN Laporan Kontrak Karyawan ====================
 

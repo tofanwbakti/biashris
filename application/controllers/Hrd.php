@@ -1416,6 +1416,19 @@ class Hrd extends CI_Controller
    }
    // =========== ./ HALAMAN LAPORAN ABSENSI ALL=============
 
+   // ============ HALAMAN LAPORAN ISTIRAHAT ========================
+   public function laporanIstirahat()
+   {
+      $today = gmdate("Y-m-d", time()+60*60*7); //like Tahun-Bulan berjalan
+      $data = array (
+         'judul'           => "Bias HRIS | Laporan Istirahat Karyawan ",
+         'rowBreak'        => $this->M_Hrd->getBreakAll(),
+         'rowBreakToday'   => $this->M_Hrd->getBreakToday($today),
+      );
+      $this->template->load('template', 'hrd/laporanIstirahat',$data); //dashboard khusus HRD 
+   }
+
+   // ============ /. HALAMAN LAPORAN ISTIRAHAT ========================
 
    // =========== HALAMAN LAPORAN KONTRAK Karyawan=============
    public function laporanKontrak()
