@@ -1085,4 +1085,149 @@ class LaporanPdf extends CI_Controller{
     }
 # /. Halaman Laporan Log User Login
 
+# Halaman Laporan Istirahat
+    public function laporanBreakToday()
+    {
+        // Get Database
+        $today = gmdate('Y-m-d', time()+60*60*7); //keyword tanggal hari ini
+        $this->db->select('*');
+        $this->db->from('tb_absen_istirahat');
+        $this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+        $this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+        $this->db->where('tgl_break',$today);
+        $this->db->where('tb_karyawan.id_jab !=',"J000");
+        $this->db->where('tb_kontrak.kontrak !=',"F");
+        $this->db->order_by('start_break',"ASC");
+        $dataBrToday = $this->db->get()->result();
+
+        /* TEMPLATE  HEADER */ // harus dipakai di setiap bentuk laporan
+        $pdf = new PDF('P');
+        $pdf->AddPage();    
+        /* ./ TEMPLATE  HEADER */  
+
+        // CONTENT
+        // Title Page
+        $pdf->SetFont('Arial','',10);
+        $pdf->SetTitle('BiasHRIS | Daftar Istirahat ' . date('d M Y',strtotime($today)));
+
+        // JUDUL FORM & No PEngajuan
+        // $pdf->Cell(10,7,'',0,1);
+        // $pdf->SetTextColor(0,0,0);
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(190,7,'Daftar Istirahat Hari Ini',0,1,'C');
+        $pdf->Cell(190,7,'Tgl. '.date("d M Y",strtotime($today)),0,1,'C');
+
+        // Table
+        // Header Table
+        $pdf->SetLeftMargin('10');
+        $pdf->Cell(190,7,'',0,1,'J');
+        $pdf->SetFillColor(158, 156, 156);
+        $pdf->SetLineWidth(.3);
+        $pdf->SetFont('Arial','',12);
+        $pdf->Cell(15,8,'No',1,0,'C',1);
+        $pdf->Cell(30,8,'NIP',1,0,'C',1);        
+        $pdf->Cell(55,8,'Nama',1,0,'C',1);
+        $pdf->Cell(25,8,'Mulai',1,0,'C',1);
+        $pdf->Cell(25,8,'Selesai',1,0,'C',1);
+        $pdf->Cell(40,8,'Ip Address',1,1,'C',1);
+        $no = 1;
+        foreach ($dataBrToday as $data){
+
+            $pdf->Cell(15,7,$no++,1,0,'C');
+            $pdf->Cell(30,7,$data->nip,1,0,'C');
+            $pdf->Cell(55,7,$data->nickname,1,0,'C');
+            $pdf->Cell(25,7,$data->start_break,1,0,'C');
+            $pdf->Cell(25,7,$data->end_break,1,0,'C');
+            $pdf->Cell(40,7,$data->ipaddress,1,1,'C');
+        }
+
+        /** TEMPLATE FOOTER dan output */ // harus dipakai di setiap bentuk laporan
+            $pdf->AliasNbPages();
+            $pdf->Output();
+        /** ./ TEMPLATE FOOTER dan output */
+    }
+
+    // Laporan Istirahat Bulan Berjalan
+    public function laporanBreakBulanAktif()
+    {
+        $key = gmdate('Y-m', time()+60*60*7); //keyword bulan ini
+        $this->db->select('*');
+        $this->db->from('tb_absen_istirahat');
+        $this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+        $this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+        $this->db->like('tgl_break',$key);
+        $this->db->where('tb_karyawan.id_jab !=',"J000");
+        $this->db->where('tb_kontrak.kontrak !=',"F");
+        $this->db->order_by('tgl_break',"ASC");
+        $dataBrMonthly = $this->db->get()->result();
+
+        $bulan = array(
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember',
+        );
+
+        $periode = $bulan[date('m')]." ".date('Y');
+
+        /* TEMPLATE  HEADER */ // harus dipakai di setiap bentuk laporan
+        $pdf = new PDF('P');
+        $pdf->AddPage();    
+        /* ./ TEMPLATE  HEADER */  
+
+        // CONTENT
+        // Title Page
+        $pdf->SetFont('Arial','',10);
+        $pdf->SetTitle('BiasHRIS | Daftar Absen Istirahat ' . $periode);
+
+        // JUDUL FORM & No PEngajuan
+        // $pdf->Cell(10,7,'',0,1);
+        // $pdf->SetTextColor(0,0,0);
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(190,7,'Daftar Absen Istirahat',0,1,'C');
+        $pdf->Cell(190,7,'Periode. '.$periode,0,1,'C');
+
+        // Table
+        // Header Table
+        $pdf->SetLeftMargin('10');
+        $pdf->Cell(190,7,'',0,1,'J');
+        $pdf->SetFillColor(158, 156, 156);
+        $pdf->SetLineWidth(.3);
+        $pdf->SetFont('Arial','',12);
+        $pdf->Cell(10,8,'No',1,0,'C',1);
+        $pdf->Cell(30,8,'NIP',1,0,'C',1);        
+        $pdf->Cell(40,8,'Nama',1,0,'C',1);
+        $pdf->Cell(30,8,'Tanggal',1,0,'C',1);
+        $pdf->Cell(25,8,'Mulai',1,0,'C',1);
+        $pdf->Cell(25,8,'Selesai',1,0,'C',1);
+        $pdf->Cell(30,8,'Ip Address',1,1,'C',1);
+        $no = 1;
+        foreach ($dataBrMonthly as $data){
+
+            $pdf->Cell(10,7,$no++,1,0,'C');
+            $pdf->Cell(30,7,$data->nip,1,0,'C');
+            $pdf->Cell(40,7,$data->nickname,1,0,'C');
+            $pdf->Cell(30,7,date("d M Y",strtotime($data->tgl_break)),1,0,'C');
+            $pdf->Cell(25,7,$data->start_break,1,0,'C');
+            $pdf->Cell(25,7,$data->end_break,1,0,'C');
+            $pdf->Cell(30,7,$data->ipaddress,1,1,'C');
+        }
+        /** TEMPLATE FOOTER dan output */ // harus dipakai di setiap bentuk laporan
+        $pdf->AliasNbPages();
+        $pdf->Output();
+        /** ./ TEMPLATE FOOTER dan output */
+    }
+
+    
+# /. Halaman Laporan Istirahat
+
+
 }

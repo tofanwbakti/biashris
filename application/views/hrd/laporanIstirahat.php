@@ -3,7 +3,7 @@
 <!-- ================================================ -->
 <script type="text/javascript">
     function downloadxls(){
-            window.location.assign('<?=base_url('LaporanXls/absenBulanAktif') ?>');            
+            window.location.assign('<?=base_url('LaporanXls/absenBreakBulanAktif') ?>');            
         }
 </script>
 <!-- Breadcumb section -->
@@ -67,7 +67,7 @@
                         echo $this->db->count_all_results();
                         ?>
                     </span>                    
-                    <span class="pull-right"><a href="<?=site_url('LaporanPdf/laporanHadirSkrg') ?>" target="_blank" class="custom"><i class="fa fa-print" style="font-size:20px"></i></a></span>
+                    <span class="pull-right"><a href="<?=site_url('LaporanPdf/laporanBreakToday') ?>" target="_blank" class="custom"><i class="fa fa-print" style="font-size:20px"></i></a></span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div><!-- /.col -->
@@ -84,7 +84,7 @@
                         echo $this->db->count_all_results();
                         ?>
                     </span>                    
-                    <span class="pull-right"><a href="<?=site_url('LaporanPdf/laporanHadirSkrg') ?>" target="_blank" class="custom"><i class="fa fa-print" style="font-size:20px"></i></a></span>
+                    <span class="pull-right"><a href="<?=site_url('LaporanPdf/laporanBreakOn') ?>" target="_blank" class="custom"><i class="fa fa-print" style="font-size:20px"></i></a></span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div><!-- /.col -->   
@@ -99,8 +99,8 @@
                     <h2 class="box-title">Laporan Istirahat Karyawan</h2>
                     <div class="pull-right">
                         <a href="javascript:voi(0)" data-toggle="tooltip" title="Download Excel" onclick="downloadxls();" > <i class="text-green fa fa-file-excel-o" style="font-size:20px;margin-right:5px"></i></a>
-                        <a href="<?=site_url('LaporanPdf/laporanBulanAktif') ?>" target="_blank" data-toggle="tooltip" title="Download PDF" > <i class="fa fa-file-pdf-o text-red" style="font-size:20px"></i></a>
-                        <a href="<?=site_url('Hrd/laporanAbsensiAll') ?>" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a>
+                        <a href="<?=site_url('LaporanPdf/laporanBreakBulanAktif') ?>" target="_blank" data-toggle="tooltip" title="Download PDF" > <i class="fa fa-file-pdf-o text-red" style="font-size:20px"></i></a>
+                        <!-- <a href="<?=site_url('Hrd/laporanAbsensiAll') ?>" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a> -->
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body ">

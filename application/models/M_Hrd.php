@@ -846,6 +846,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 		
 		// ===================== ./HALAMAN Laporan Absensi User ====================
+
+		// ===================== HALAMAN LAPORAN ABSEN ISTIRAHAT ====================
+		// Get data Absensi iSTIRAHAT Bulan Aktif
+		public function getBreakBulan($key)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+			$this->db->like('tgl_break',$key);
+			$this->db->where('tb_karyawan.id_jab !=',"J000");
+			$this->db->where('tb_kontrak.kontrak !=',"F");
+			$this->db->order_by('id_break',"DESC");
+			$data =  $this->db->get();
+			return $data->result_array();
+		}
+		// /. ===================== HALAMAN LAPORAN ABSEN ISTIRAHAT ====================
 		
 		// ===================== HALAMAN Laporan Absensi Karyawan ALL ====================
 		// Get data Absensi Bulan Aktif

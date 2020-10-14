@@ -368,10 +368,10 @@
               // if(date("D")=="Fri"){ $limitOut = strtotime('11:45');} else $limitOut = strtotime('14:43'); //nilai default batas jam Istirahat Keluar
               // if(date("D")=="Fri"){ $limitIn = strtotime('13:19');} else $limitIn = strtotime('14:45'); //nilai default batas jam Istirahat Masuk
               
-                if(date("D")=="Fri"){ $breakOut = strtotime('11:30');} else $breakOut = strtotime('12:00'); //nilai default jam Istirahat Keluar
-                if(date("D")=="Fri"){ $breakIn = strtotime('13:29');} else $breakIn = strtotime('13:00'); //nilai default jam Istirahat Masuk
-                if(date("D")=="Fri"){ $limitOut = strtotime('11:45');} else $limitOut = strtotime('12:15'); //nilai default batas jam Istirahat Keluar
-                if(date("D")=="Fri"){ $limitIn = strtotime('13:19');} else $limitIn = strtotime('12:45'); //nilai default batas jam Istirahat Masuk
+                if(date("D")=="Fri"){ $breakOut = strtotime('11:29');} else $breakOut = strtotime('11:59'); //nilai default jam Istirahat Keluar
+                if(date("D")=="Fri"){ $breakIn = strtotime('13:35');} else $breakIn = strtotime('13:05'); //nilai default jam Istirahat Masuk
+                if(date("D")=="Fri"){ $limitOut = strtotime('11:44');} else $limitOut = strtotime('12:14'); //nilai default batas jam Istirahat Keluar
+                if(date("D")=="Fri"){ $limitIn = strtotime('13:19');} else $limitIn = strtotime('12:44'); //nilai default batas jam Istirahat Masuk
                 $sekarang =  strtotime(gmdate("G:i", time()+60*60*7)); 
                 // $kurang = $sekarang - $pulang;
                 if ($sekarang <= $breakOut ){ echo 
