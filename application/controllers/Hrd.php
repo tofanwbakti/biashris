@@ -1408,9 +1408,14 @@ class Hrd extends CI_Controller
 
    public function laporanAbsensiAll()
    {
+      $reservation = explode(" - ",$this->input->post('reservation'));
+      $dateawal = date("Y-m-d",strtotime($reservation[0]));
+      $dateakhir = date("Y-m-d",strtotime($reservation[1]));
+
+      // echo $dateawal," | ",$dateakhir;
       $data = array(
          'judul' => "Bias HRIS | Laporan Absensi Karyawan ",
-         'rowabsen'  => $this->M_Hrd->getAbsenAll(),
+         'rowabsen'  => $this->M_Hrd->getAbsenAll($dateawal,$dateakhir),
       );
       $this->template->load('template', 'hrd/laporanAbsensiAll',$data); //dashboard khusus HRD 
    }
@@ -1426,6 +1431,21 @@ class Hrd extends CI_Controller
          'rowBreakToday'   => $this->M_Hrd->getBreakToday($today),
       );
       $this->template->load('template', 'hrd/laporanIstirahat',$data); //dashboard khusus HRD 
+   }
+
+   // Filtered laporan istirahat karyawan 
+   public function laporanIstirahatFilter()
+   {
+      $reservation = explode(" - ",$this->input->post('reservation'));
+      $dateawal = date("Y-m-d",strtotime($reservation[0]));
+      $dateakhir = date("Y-m-d",strtotime($reservation[1]));
+
+      $data = array (
+         'judul'           => "Bias HRIS | Laporan Istirahat Karyawan ",
+         'rowBreakFilter'   => $this->M_Hrd->getBreakFilter($dateawal,$dateakhir),
+      );
+
+      $this->template->load('template', 'hrd/laporanIstirahatFilter',$data); //dashboard khusus HRD 
    }
 
    // ============ /. HALAMAN LAPORAN ISTIRAHAT ========================

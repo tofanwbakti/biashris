@@ -31,6 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- DATA TABLES -->
         <link href="<?php echo base_url();?>assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url();?>assets/datatables/Button-1.6.1/css/button.daTables.css" rel="stylesheet" type="text/css" />
         <!-- Datepicker -->
         <link rel="stylesheet" href="<?= base_url();?>/assets/datepicker-1.9.0/css/bootstrap-datepicker3.css" type="text/css">
         <link rel="stylesheet" href="<?= base_url();?>/assets/css/bootstrap-datetimepicker.min.css" type="text/css">
@@ -202,11 +203,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">MENU UTAMA</li>
-                <li>
+                <li class="treeview">
                     <a href="<?= site_url('Dashboard')?>">
-                        <!-- <i class="fa fa-envelope"></i> <span>Mailbox</span> -->
-                        <i class="fa fa-dashboard"></i><span>Dashboard</span>
-                        <!-- <small class="label pull-right bg-yellow">12</small> -->
+                        <i class="fa fa-dashboard"></i><span> Dashboard</span>
                     </a>
                 </li>
                 
@@ -423,6 +422,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script type="text/javascript">
         
     // Untuk Datatables
+        $(document).ready(function() {
+            $('#repButton').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend:    'excelHtml5',
+                        text:      '<i class="fa fa-file-excel-o text-green" style="font-size:20px"></i>',
+                        titleAttr: 'Export Excel'
+                    }
+                ]
+            } );
+        } );
+
         $(document).ready(function(){
             $('#tablehistory').DataTable()
         });
@@ -591,6 +603,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         // Date range picker
         $(function() {
+            $('#reservation').daterangepicker()
 
             var start = moment().subtract(29, 'days');
             var end = moment();
@@ -615,7 +628,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }, cb);
 
             cb(start, end);
-
         });
     // FLOT CHART
     $(function () {

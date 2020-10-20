@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			if ($id2 == "A5"){ // level karyawan
 				$this->db->where('tb_userakses.email',$id); // berdasarkan email user
-			}else if (($id2 == "A4") && ($jab == "J008")){ # J008 adalah level manager
+			}else if (($id2 == "A4") && ($jab == "J008") ){ # J008 adalah level manager
 				if($grup != "G1"){
 					$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
 					$this->db->where('tb_karyawan.id_jab !=',"J007"); // berdasarkan jabatan karyawan
@@ -85,12 +85,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}else if (($id2 == "A4") && ($jab == "J006")){ #jabatan direktur
 				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
 			}else if(($id2 == "A4") && ($jab == "J007")){ #jabatan GM
-				// $this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
-				// $this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
-				$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan SBU karyawan
-				$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
-				$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
-			}else if($id2 == "SC"){
+				if($grup == "G1"){
+					$this->db->where('tb_karyawan.kode',$sbu); // berdasarkan SBU karyawan
+					$this->db->where('tb_karyawan.sub_unt',$sub); // berdasarkan sub unit karyawan
+					// $this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan Grup SBU karyawan
+					$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+					$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user					
+				}else{
+					$this->db->where('tb_karyawan.id_grup',$grup); // berdasarkan Grup SBU karyawan
+					$this->db->where('tb_karyawan.id_jab !=',"J006"); // berdasarkan bukan jabatan diatasnya
+					$this->db->or_like('tb_karyawan.email',$id); // berdasarkan email user
+				}		
+			}else if ($id2 == "SC"){
 				$this->db->where('tb_ijinkeluar.status !=', "C");
 			}
 			$query = $this->db->get();

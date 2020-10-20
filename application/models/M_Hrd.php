@@ -862,17 +862,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$data =  $this->db->get();
 			return $data->result_array();
 		}
+
+		// Get Laporan Istirahat yang ter filter
+		public function getBreakFIlter($awal,$akhir)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+			$this->db->where('tb_kontrak.kontrak !=',"F");
+			$this->db->where('tb_absen_istirahat.tgl_break >=',$awal);
+			$this->db->where('tb_absen_istirahat.tgl_break <=',$akhir);
+			$this->db->order_by('tb_absen_istirahat.id_break',"ASC");
+			$data =  $this->db->get();
+			return $data->result_array();
+		}
 		// /. ===================== HALAMAN LAPORAN ABSEN ISTIRAHAT ====================
 		
 		// ===================== HALAMAN Laporan Absensi Karyawan ALL ====================
 		// Get data Absensi Bulan Aktif
-		public function getAbsenAll()
+		public function getAbsenAll($awal,$akhir)
 		{
 			$this->db->select('*');
 			$this->db->from('tb_absensi');
 			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absensi.id_kar','left');
 			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
-			$this->db->order_by('tb_absensi.id_absen',"DESC");
+			$this->db->where('tb_absensi.tgl >=',$awal);
+			$this->db->where('tb_absensi.tgl <=',$akhir);
+			$this->db->order_by('tb_absensi.id_absen',"ASC");
 			$data =  $this->db->get();
 			return $data->result_array();
 		}

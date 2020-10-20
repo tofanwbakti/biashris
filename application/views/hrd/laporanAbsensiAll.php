@@ -134,14 +134,14 @@
                     <div class="box-header">
                         <h2 class="box-title">Laporan Absensi Karyawan</h2>
                         <div class="pull-right">
-                            <a href="javascript:voi(0)" data-toggle="tooltip" title="Download Excel" onclick="downloadxls();" > <i class="text-green fa fa-file-excel-o" style="font-size:20px;margin-right:5px"></i></a>
+                            <!-- <a href="javascript:voi(0)" data-toggle="tooltip" title="Download Excel" onclick="downloadxls();" > <i class="text-green fa fa-file-excel-o" style="font-size:20px;margin-right:5px"></i></a>
                             <a href="<?=site_url('LaporanPdf/laporanBulanAktif') ?>" target="_blank" data-toggle="tooltip" title="Download PDF" > <i class="fa fa-file-pdf-o text-red" style="font-size:20px"></i></a>
-                            <a href="javascript:void(0)" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a>
+                            <a href="javascript:void(0)" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a> -->
                         </div>
                     </div><!-- /.box-header -->
                     <div class="box-body ">
                         <div class="table-responsive no-padding">
-                            <table class="table table-hover" class="display" id="tablehistory3" style="width:100%">
+                            <table class="table table-hover" class="display" id="repButton" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th width="10px">No</th>

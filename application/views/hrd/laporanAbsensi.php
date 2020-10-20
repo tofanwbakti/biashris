@@ -5,6 +5,10 @@
     function downloadxls(){
             window.location.assign('<?=base_url('LaporanXls/absenBulanAktif') ?>');            
         }
+
+        function myFunction(x) {
+        x.classList.toggle("fa-search-minus");
+        }
 </script>
 <!-- Breadcumb section -->
 <section class="content-header">
@@ -188,10 +192,27 @@
                             <div class="box-header">
                                 <h2 class="box-title">Laporan Absensi Karyawan</h2>
                                 <div class="pull-right">
-                                    <a href="javascript:voi(0)" data-toggle="tooltip" title="Download Excel" onclick="downloadxls();" > <i class="text-green fa fa-file-excel-o" style="font-size:20px;margin-right:5px"></i></a>
-                                    <a href="<?=site_url('LaporanPdf/laporanBulanAktif') ?>" target="_blank" data-toggle="tooltip" title="Download PDF" > <i class="fa fa-file-pdf-o text-red" style="font-size:20px"></i></a>
-                                    <a href="<?=site_url('Hrd/laporanAbsensiAll') ?>" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a>
+                                    
+                                    <a href="javascript:voi(0)" data-toggle="tooltip" title="Download XLS" onclick="downloadxls();" > <i class="text-green fa fa-file-excel-o" style="font-size:20px;margin-right:5px"></i></a>
+                                    <a href="<?=site_url('LaporanPdf/laporanBulanAktif') ?>" target="_blank" data-toggle="tooltip" title="Download PDF" > <i class="fa fa-file-pdf-o text-red" style="font-size:20px;margin-right:5px"></i></a>
+                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#cari"><i class="fa fa-search" onclick="myFunction(this)" data-toggle="tooltip" title="Cari Tgl." style="font-size:20px;margin-right:5px"></i></a>
+                                    <!-- <a href="<?=site_url('Hrd/laporanAbsensiAll') ?>" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a> -->
+                                    
+                                    <!-- /.form group -->
                                 </div>
+                                <!-- Date range -->
+                                <form action="<?=site_url('Hrd/laporanAbsensiAll')?>" method="post">
+                                    <div class="form-group collapse" id="cari" style="margin-right:15px;margin-top:5px">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control" name="reservation" id="reservation" style="width:110%">
+                                        <span class="input-group-btn"> <button class="btn btn-info"> Cari</button></span>
+                                        </div>
+                                        <!-- /.input group -->
+                                    </div>
+                                </form>
                             </div><!-- /.box-header -->
                             <div class="box-body ">
                                 <div class="table-responsive no-padding">

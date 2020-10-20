@@ -96,14 +96,13 @@
 
 <!-- Table -->
     <div class="row">
-        <div class="col-xs-8">
+        <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
                     <h2 class="box-title">Laporan Istirahat Karyawan</h2>
-                    <div class="pull-right">
+                    <!-- <div class="pull-right">
                         <a href="javascript:voi(0)" data-toggle="tooltip" title="Download Excel" onclick="downloadxls();" > <i class="text-green fa fa-file-excel-o" style="font-size:20px;margin-right:5px"></i></a>
                         <a href="<?=site_url('LaporanPdf/laporanBreakBulanAktif') ?>" target="_blank" data-toggle="tooltip" title="Download PDF" > <i class="fa fa-file-pdf-o text-red" style="font-size:20px"></i></a>
-                        <!-- <a href="<?=site_url('Hrd/laporanAbsensiAll') ?>" data-toggle="tooltip" title="Lihat Semua"><i class="fa fa-database text-blue" style="font-size:20px;margin-left:5px"></i></a> -->
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#cari"><i class="fa fa-search" onclick="myFunction(this)" data-toggle="tooltip" title="Cari Tgl." style="font-size:20px;margin-right:5px"></i></a>
                     </div>
                     <form action="<?=site_url('Hrd/laporanIstirahatFilter')?>" method="post">
@@ -115,13 +114,12 @@
                                 <input type="text" class="form-control" name="reservation" id="reservation" style="width:110%">
                             <span class="input-group-btn"> <button class="btn btn-info"> Cari</button></span>
                             </div>
-                            <!-- /.input group -->
                         </div>
-                    </form>
+                    </form> -->
                 </div><!-- /.box-header -->
                 <div class="box-body ">
                     <div class="table-responsive no-padding">
-                        <table class="table table-hover" class="display" id="tablehistory3" style="width:100%">
+                        <table class="table table-hover" class="display" id="repButton" style="width:100%">
                             <thead>
                                 <tr>
                                     <th width="10px">No</th>
@@ -134,7 +132,7 @@
                             </thead>
                             <tbody>
                             <?php $no = 1;
-                            foreach ($rowBreak as $data){ ?>
+                            foreach ($rowBreakFilter as $data){ ?>
                                 <!-- <tr <?= $data['break_status'] == "OFF" ? "class='primary'" : null ?>> -->
                                 <tr>
                                     <td><?= $no++?></td>
@@ -153,41 +151,6 @@
                 </div> <!-- ./ Box body -->
             </div>
         </div>
-        <!-- Table Kanan -->
-        <div class="col-xs-4">
-            <div class="box box-danger">
-                <div class="box-header">
-                    <h3 class="box-title">Istirahat Hari Ini</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body ">
-                    <div class="table-responsive no-padding">
-                        <table class="table table-hover" id="table3">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Mulai</th>
-                                    <th>Selesai</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php $no = 1;
-                            foreach($rowBreakToday as $data) {
-                            ?>
-                                <tr>
-                                    <td><?= $no++?></td>
-                                    <td><?=$data['nickname'] ?></td>
-                                    <td><?=$data['start_break'] ?></td>
-                                    <td><?=$data['end_break'] ?></td>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> <!-- ./ Box body -->
-            </div>
-        </div>
-        <!-- ./ Table Kanan -->
     </div>
 <!-- ./ Table -->
 
