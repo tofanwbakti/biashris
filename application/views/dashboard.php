@@ -301,7 +301,7 @@
           <div class="box box-success" >
             <div class="box-header">
               <!-- <i class="icon fa fa-archive"></i> -->
-              <small class="pull-left" style="font-size:10px"><?php $hari= date("D"); switch ($hari) {
+              <small class="pull-left" style="font-size:10px"><?php $hari= gmdate("D", time()+60*60*7); switch ($hari) {
                 case 'Sun' : $hari = "Minggu"; break;
                 case 'Mon' : $hari = "Senin"; break;
                 case 'Tue' : $hari = "Selasa"; break;
@@ -318,8 +318,8 @@
             <!-- KOndisi untuk pengaturan tombol absen -->
               <?php
               foreach ($rowpab as $data) {}
-                if(date("D")=="Fri"){ $jam = strtotime('07:30');} else $jam = strtotime('08:00'); //nilai default jam masuk kerja
-                if(date("D")=="Fri"){ $pulang = strtotime('17:30');} else $pulang = strtotime('17:00'); //nilai default jam pulang kerja
+                if(date("D")=="Fri"){ $jam = strtotime('07:35');} else $jam = strtotime('08:05'); //nilai default jam masuk kerja
+                if(date("D")=="Fri"){ $pulang = strtotime('17:29');} else $pulang = strtotime('16:59'); //nilai default jam pulang kerja
                 $sekarang =  strtotime(gmdate("G:i", time()+60*60*7)); 
                 // $kurang = $sekarang - $pulang;
                 if ($sekarang <= $jam ){ echo 

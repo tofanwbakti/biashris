@@ -60,6 +60,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" /> -->
 </head>
 <body class="skin-blue">
+    <!-- Whatsapp plugin -->
+    <div style="position:fixed;left:20px;bottom:20px;">
+        <a href="https://api.whatsapp.com/send?phone=+6281372964945&text=Halo" style="color:white">
+            <button style="background:#32C03C;vertical-align:center;height:36px;border-radius:5px">
+        <img src="https://web.whatsapp.com/img/favicon/1x/favicon.png"> Chat Admin</button></a>
+    </div>
+    <!-- /. Whatsapp plugin -->
     <!-- Site wrapper -->
     <div class="wrapper">
 
