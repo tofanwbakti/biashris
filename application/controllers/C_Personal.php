@@ -705,25 +705,44 @@ public function apvAlpa($id)
    {
       $jamin = gmdate("G:i:s", time()+60*60*7);
       $tgl = gmdate("Y-m-d", time()+60*60*7);
-      $day = gmdate("l");
+      $day = gmdate("l",time()+60*60*7);
       $idkar = $this->fungsi->user_login()->id_kar;
       $ip = $this->input->ip_address();
+
       if ($day == "Friday") {
-         $jammasuk= strtotime('07:30');
-      }else  $jammasuk= strtotime('08:00'); //nilai default jam masuk
+         $jammasuk= strtotime('07:35');
+      }else if($day == "Monday" || $day == "Tuesday" || $day == "Wednesday" || $day == "Thursday") {$jammasuk= strtotime('08:05');} //nilai default jam masuk
+      
       if(strtotime(gmdate("G:i", time()+60*60*7)) <= $jammasuk ){
          $status = "1";
       } else $status = "2"; //kondisi 1 = ontime; 2 = terlambat
 
-      $data = array  (
-         'tgl' => $tgl,
-         'hari' => $day,
-         'jam_masuk' => $jamin,
-         'jam_pulang' => "null",
-         'id_kar' => $idkar,
-         'absen_status' => $status,
-         'ipaddress' => $ip
-      );
+      if($day == "Saturday" || $day == "Sunday"){
+         $status = "1";}
+
+      #meyimpan data untuk table absensi dengankondisi weekday atau weekend
+      if($day == "Saturday" || $day == "Sunday"){
+         $data = array  (
+            'tgl' => $tgl,
+            'hari' => $day,
+            'jam_masuk' => $jamin,
+            'jam_pulang' => "null",
+            'id_kar' => $idkar,
+            'absen_status' => "1",
+            'ipaddress' => $ip
+         );
+      }else{
+         $data = array  (
+            'tgl' => $tgl,
+            'hari' => $day,
+            'jam_masuk' => $jamin,
+            'jam_pulang' => "null",
+            'id_kar' => $idkar,
+            'absen_status' => $status,
+            'ipaddress' => $ip
+         );
+      }
+
 
       $datalambat = array ( //array table ijin terlambat
          'id_kar' => $idkar,
@@ -743,7 +762,7 @@ public function apvAlpa($id)
       }else {
          $query = $this->M_Aproject->absenIn('tb_absensi',$data);
          if($status == "2"){
-            $querylambat = $this->M_Aproject->logLambat('tb_ijinlambat',$datalambat);
+            $querylambat = $this->M_Aproject->logLambat('tb_ijinlambat',$datalambat);            
          }
          $this->session->set_flashdata('flash','Ditambahkan');
          redirect ('dashboard');

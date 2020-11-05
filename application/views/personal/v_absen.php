@@ -63,6 +63,10 @@
         $("#submit").on("click",function(){
             cekRFID();
         });
+
+        $("#rfid").on("change",function(){
+            cekRFID();
+        })
     });
     
 </script>

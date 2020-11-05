@@ -318,17 +318,35 @@
             <!-- KOndisi untuk pengaturan tombol absen -->
               <?php
               foreach ($rowpab as $data) {}
-                if(date("D")=="Fri"){ $jam = strtotime('07:35');} else $jam = strtotime('08:05'); //nilai default jam masuk kerja
-                if(date("D")=="Fri"){ $pulang = strtotime('17:29');} else $pulang = strtotime('16:59'); //nilai default jam pulang kerja
+                $idkar = $this->fungsi->user_login()->id_kar;
+                $tgl = gmdate("Y-m-d",time()+60*60*7);
+                $day = gmdate("D", time()+60*60*7);
+
+                if($day=="Fri"){ $jam = strtotime('07:35');} 
+                else if($day == 'Mon' || $day == 'Tue' || $day == 'Wed' || $day == 'Thu') {$jam = strtotime('08:05'); } //nilai default jam masuk kerja
+
+                if($day=="Fri"){ $pulang = strtotime('17:29');} 
+                else if($day == 'Mon' || $day == 'Tue' || $day == 'Wed' || $day == 'Thu') {$pulang = strtotime('16:59');} //nilai default jam pulang kerja
+
                 $sekarang =  strtotime(gmdate("G:i", time()+60*60*7)); 
                 // $kurang = $sekarang - $pulang;
-                if ($sekarang <= $jam ){ echo 
-                  "<a href='". site_url('C_Personal/absenHadir')."' class='btn btn-info ' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Masuk'></a>";
-                }else if($sekarang >=$jam && $sekarang <= $pulang ){echo
-                  "<a href='". site_url('C_Personal/absenHadir')."' class='btn btn-warning tombol-in' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Masuk Telat' ></a>";
-                } else if($sekarang >= $pulang) { echo 
-                  "<a href='". site_url('C_Personal/absenPulang/').$data["id_absen"]."' type='button' class='btn btn-success ' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Pulang' ></a>";
-                }  ?>
+                if($day == 'Sat' || $day == 'Sun'){
+                  $cek = $this->db->query("SELECT * FROM tb_absensi WHERE id_kar='$idkar' AND tgl='$tgl'");
+                  if($cek->num_rows() == 0){
+                    echo "<a href='". site_url('C_Personal/absenHadir')."' class='btn btn-info ' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Masuk'></a>";
+                  }else{
+                    echo "<a href='". site_url('C_Personal/absenPulang/').$data["id_absen"]."' type='button' class='btn btn-success ' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Pulang' ></a>";
+                  }
+                }else{
+                  if ($sekarang <= $jam ){ echo 
+                    "<a href='". site_url('C_Personal/absenHadir')."' class='btn btn-info ' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Masuk'></a>";
+                  }else if($sekarang >=$jam && $sekarang <= $pulang ){echo
+                    "<a href='". site_url('C_Personal/absenHadir')."' class='btn btn-warning tombol-in' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Masuk Telat' ></a>";
+                  } else if($sekarang >= $pulang) { echo 
+                    "<a href='". site_url('C_Personal/absenPulang/').$data["id_absen"]."' type='button' class='btn btn-success ' style='width:170px;height:170px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:135px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:90px;margin-top:30px' data-toggle='tooltip' title='Pulang' ></a>";
+                  }  
+                }
+                ?>
             </div>
             <div class="">
               <div class="loader"></div>
@@ -447,9 +465,9 @@
                                 elseif ($data['hari']=="Thursday") echo "Kamis";
                                 elseif ($data['hari']=="Friday") echo "Jumat";
                                 elseif ($data['hari']=="Saturday") echo "Sabtu";
-                                elseif ($data['hari']=="Monday") echo "Minggu";
+                                elseif ($data['hari']=="Sunday") echo "Minggu";
                       ?></td>
-                      <td><?= date("d F Y", strtotime($data['tgl']))?></td>
+                      <td><?= date("d M y", strtotime($data['tgl']))?></td>
                       <td><?= $data['jam_masuk']?></td>
                       <td><?= $data['jam_pulang']?></td>
                       <td>
@@ -461,7 +479,7 @@
                             $beda = date_diff($jmIn,$jmFdy);
                           }else {
                             $beda = date_diff($jmIn,$jmDef);}
-                          echo $beda->h,'jam, '. $beda->i.'menit';
+                          echo $beda->h,'jam, '. $beda->i.'mnt';
                         ?>
                       </td>
                       <td><?= $data['ipaddress']?></td>
@@ -496,7 +514,7 @@
                     <tr>
                       <td><?= $no++; ?></td>
                       <td><?= $data['nickname']?></td>                      
-                      <td><?= date("d F Y", strtotime($data['tgl_break']))?></td>
+                      <td><?= date("d M y", strtotime($data['tgl_break']))?></td>
                       <td><?= $data['start_break']?></td>
                       <td><?= $data['end_break']?></td>                      
                       <td><?= $data['ipaddress']?></td>
