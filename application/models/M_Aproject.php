@@ -708,6 +708,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			return $data->result_array();
 		}
 
+		// Halaman Istirahat Karyawan
+		// Get data tb_absen_istirahat untuk table record istirahat
+		public function getBreakAll($tgl)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_absen_istirahat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absen_istirahat.id_kar','left');
+			$this->db->where('tb_absen_istirahat.tgl_break',$tgl);
+			$this->db->where('tb_karyawan.id_jab !=',"J000");
+			$this->db->order_by('id_break','ASC');
+			$data = $this->db->get();
+			return $data->result_array();
+		}
+
+		// Get Database Kartu RFID
+		public function cekDbKartuJoin($rfid)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_kartu');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_kartu.id_kar','left');
+			$this->db->where('tb_kartu.id_kartu',$rfid);
+			$data =  $this->db->get();
+			return $data->result_array();
+		}
+
 		// ----------KEPEGAWAIAN -> CUTI ---------------
 		// Get data Cuti bersama (Tabel tb_cuti_bersama)
 		public function getCutiBr() //[rowcutibr]

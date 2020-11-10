@@ -261,6 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php } else { ?>
                 <li class="treeview">
                     <a href="<?= site_url('C_Personal/absenHome')?>"><i class="fa fa-user"></i> Absen Karyawan </a>
+                    <a href="<?= site_url('C_Personal/breakOut')?>"><i class="fa fa-user"></i> Istirahat Karyawan </a>
                 </li>
                 <?php } ?>
 <!-- MENU Untuk HRD -->
@@ -336,6 +337,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li class="header">DEVELOPER</li>
                 <li><a href="<?= site_url('Developer')?>"><i class="fa fa-tags text-info"></i>Developer</a></li>
                 <li><a href="<?= site_url('C_Personal/absenHome')?>"><i class="fa fa-user"></i> Absen Karyawan </a></li>
+                <li><a href="<?= site_url('C_Personal/breakOut')?>"><i class="fa fa-user"></i> Istirahat Karyawan </a></li>
                 <li><a href="<?= site_url('Developer/logUserLogin')?>"><i class="fa fa-user"></i> Log User Login </a></li>
                 <?php } ?>
                 

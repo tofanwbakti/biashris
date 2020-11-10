@@ -881,7 +881,7 @@ public function apvAlpa($id)
       $this->template->load('template','personal/v_absen',$data);
    }
 
-   // Proses Pengecekan Kartu dan Menampilkan Tombol Absen 
+   // Proses Pengecekan Kartu dan Menampilkan Tombol Absen KEHADIRAN
    public function cekKartuId()
    {
       $rfid = $this->input->post('id_kartu');
@@ -899,6 +899,45 @@ public function apvAlpa($id)
                   "<div class='box-body text-center'><a href='". site_url('C_Personal/absenIn/').encrypt_url($row['id_kar'])."' data-tooltip='tooltip' id='btnAbsen' title='Masuk Telat' class='btn btn-warning tombol-in' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px'></a></div>";
             } else if($sekarang >= $pulang) {   echo 
                   "<div class='box-body text-center'><a href='". site_url('C_Personal/absenOut/').encrypt_url($row['id_kar'])."' data-tooltip='tooltip' id='btnAbsen' title='Pulang' type='button' class='btn btn-success ' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px'></a></div>";
+            }
+         }
+         
+         // echo "<span class='text-danger'>  Data Sudah Ada ! <i class='icon fa fa-ban pull-left' style='margin-top:3px'></i></span>";
+      }else{
+         echo "<h2 style='margin-top:5px;margin-bottom:5px;text-align:center'><span class='text-danger'> Data Kosong! <i class='icon fa fa-ban' style='margin-top:3px'></i></span></h2>";
+      }
+   }
+
+   // Proses Pengecekan Kartu dan Menampilkan Tombol Absen ISTIRAHAT
+   public function cekKartuRFId()
+   {
+      $rfid = $this->input->post('id_kartu');
+      $cek = $this->db->query("SELECT * FROM tb_kartu WHERE id_kartu='$rfid'");
+      if($cek->num_rows() >= 1){
+         $tgl = gmdate("Y-m-d", time()+60*60*7);
+         $hasil = $this->M_Aproject->cekDbKartuJoin($rfid);
+         foreach ($hasil as $row){
+            echo "<p><h2 style='margin-top:5px;margin-bottom:5px;text-align:center'><span class='text-success'>  $row[nickname] ! <i class='icon fa fa-check' style='margin-top:3px'></i></span></h2></p>";
+            // if(date("D")=="Fri"){ $breakOut = strtotime('15:21');} else $breakOut = strtotime('09:24'); //nilai default jam Istirahat Keluar
+            // if(date("D")=="Fri"){ $limitOut = strtotime('15:25');} else $limitOut = strtotime('09:26'); //nilai default batas "AKHIR" jam Istirahat Keluar
+            // if(date("D")=="Fri"){ $limitIn = strtotime('15:30');} else $limitIn = strtotime('11:41'); //nilai default batas "MULAI" jam Istirahat Masuk
+            // if(date("D")=="Fri"){ $breakIn = strtotime('15:28');} else $breakIn = strtotime('11:43'); //nilai default jam Istirahat Masuk
+
+            if(date("D")=="Fri"){ $breakOut = strtotime('11:29');} else $breakOut = strtotime('11:59'); //nilai default jam MULAI Istirahat Keluar
+            if(date("D")=="Fri"){ $breakIn = strtotime('13:35');} else $breakIn = strtotime('13:05'); //nilai default jam AKHIR Istirahat Masuk
+            if(date("D")=="Fri"){ $limitOut = strtotime('11:45');} else $limitOut = strtotime('12:15'); //nilai default batas jam AKHIR Istirahat Keluar
+            if(date("D")=="Fri"){ $limitIn = strtotime('13:19');} else $limitIn = strtotime('12:44'); //nilai default batas jam MULAI Istirahat Masuk
+            $sekarang =  strtotime(gmdate("G:i", time()+60*60*7)); 
+            if ($sekarang <= $breakOut ){ echo 
+               "<div class='box-body text-center'><a href='javascript:void(0)' class='btn btn-default ' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px'></a></div>";
+             }else if($sekarang >= $breakOut && $sekarang <= $limitOut ){echo //aktifkan tombol start istirahat (breakout)
+               "<div class='box-body text-center'><a href='". site_url('C_Personal/breakStart/').encrypt_url($row['id_kar'])."' class='btn btn-danger tombol-in' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px' data-toggle='tooltip' title='Break Start' ></a></div>";
+             } else if($sekarang >= $limitOut && $sekarang <= $limitIn ) { echo //matikan tombol start istirahat jika melewati batas 15 menit dari breakOut
+               "<div class='box-body text-center'><a href='javascript:void(0)' class='btn btn-default ' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px'></a></div>";
+             } else if($sekarang >= $limitIn && $sekarang <= $breakIn){ echo //aktifkan tombol start istirahat masuk jika sudah masuk batas 15 menit sebelum breakIn
+               "<div class='box-body text-center'><a href='". site_url('C_Personal/breakFin/').encrypt_url($row['id_kar']).'/'.$tgl."' class='btn btn-danger tombol-in' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px' data-toggle='tooltip' title='Break End' ></a></div>";
+             }else if($sekarang >= $breakIn){ echo //matikan tombol start istirahat seteelah melewati batas waktu istirahat
+               "<div class='box-body text-center'><a href='javascript:void(0)' class='btn btn-default ' style='width:370px;height:370px;padding: 10px 16px;font-size: 75px;line-height: 1.33;border-radius:335px'><img src='".base_url('assets/images/fp.png')."' alt='' style='height:250px;margin-top:50px'></a></div>";
             }
          }
          
@@ -981,6 +1020,78 @@ public function apvAlpa($id)
          redirect ('C_Personal/absenHome');
       }
    }
+
+   // ======================== HALAMAN ABSEN ISTIRAHAT  =========================
+   // index 
+   public function breakOut()
+   {
+      $tgl = gmdate("Y-m-d", time()+60*60*7);
+      $data = array (
+         'judul' => "BiasHRIS | Absensi Istirahat Karyawan",
+         'dtbreak' => $this->M_Aproject->getBreakAll($tgl) //get data absessi all
+      );
+      $this->template->load('template','personal/v_istirahat',$data);
+   }
+
+   // Button Proses Mulai Istirahat
+   public function breakStart()
+   {
+      $idkar      = decrypt_url($this->uri->segment(3));
+      $timeBreak  = gmdate("G:i:s", time()+60*60*7);
+      $tgl        = gmdate("Y-m-d", time()+60*60*7);
+      $ip         = $this->input->ip_address();
+      $status     = "ON";
+
+      $data = array (
+         'tgl_break'    => $tgl,
+         'start_break'  => $timeBreak,
+         'end_break'    => "NULL",
+         'id_kar'       => $idkar,
+         'break_status' => $status,
+         'ipaddress'    => $ip
+      );
+
+      $cek = $this->db->query("SELECT * FROM tb_absen_istirahat WHERE tgl_break='$tgl' AND id_kar='$idkar'");
+      if($cek->num_rows() != 0){
+         $this->session->set_flashdata('flashGagal','Ditambahkan');
+         redirect ('C_Personal/breakOut');
+      }else {
+         $query = $this->M_Aproject->breakOn('tb_absen_istirahat',$data);
+         $this->session->set_flashdata('flash','Ditambahkan');
+         redirect ('C_Personal/breakOut');
+      }
+   }
+
+   // Button Proses Selesai Istirahat
+   public function breakFin()
+   {
+      $idkar      = decrypt_url($this->uri->segment(3));
+      $tgl        = gmdate("Y-m-d", time()+60*60*7);
+      $breakend   = gmdate("G:i:s", time()+60*60*7);
+      $status     = "OFF";
+
+      $data = array (
+         'end_break'    => $breakend,
+         'break_status' => $status
+      );
+      $where = array (
+         'id_kar' => $idkar,
+         'tgl_break' => $tgl
+      );
+
+      $cek = $this->db->query("SELECT * FROM tb_absen_istirahat WHERE id_kar='$idkar' AND tgl_break='$tgl' AND end_break='NULL' ");
+      if($cek->num_rows() <= 0){
+         $this->session->set_flashdata('flashGagal','Ditambahkan');
+         redirect ('C_Personal/breakOut');
+      }else {
+         $query = $this->M_Aproject->breakOff($where,$data,'tb_absen_istirahat');
+         $this->session->set_flashdata('flash','Ditambahkan');
+         redirect ('C_Personal/breakOut');
+      }
+
+   }
+
+   // ======================== /. HALAMAN ABSEN ISTIRAHAT  =========================
 
    // ========================== CUTI =============================== // edit tgl 24 Januari 2020
    public function cuti()
