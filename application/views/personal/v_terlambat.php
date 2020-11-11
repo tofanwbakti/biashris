@@ -1,9 +1,15 @@
 <!-- View Template Ijen Keluar  -->
 <!-- ================================================ -->
+<script type="text/javascript">
+    function myFunction(x) {
+        x.classList.toggle("fa-search-minus");
+    }
+</script>
+
 <!-- Breadcumb section -->
 <section class="content-header">
     <h1>
-        <img src="<?=base_url()?>/assets/images/medical.svg" style="height:50px; margin-right:10px" alt=""> Izin Terlambat
+        <i class="fa fa-sign-in text-warning"></i> Izin Terlambat
         <small>Masuk Kerja Terlambat</small>
         
     </h1>
@@ -43,11 +49,25 @@
 <!-- Tables  -->
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title"> Riwayat Izin Terlambat</h3>        
-            <!-- <div class="pull-right">            
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjukan"><i class="fa fa-plus"></i>
-                Ajukan</button>                    
-            </div> -->
+            <h3 class="box-title"> Riwayat Izin Terlambat</h3>  
+            <?php if($this->fungsi->user_login()->id_lvl == "A1" || $this->fungsi->user_login()->id_lvl == "A2" )  { ?>
+                <div class="pull-right">            
+                <a href="javascript:void(0);" data-toggle="collapse" data-target="#cari"><i class="fa fa-search" onclick="myFunction(this)" data-toggle="tooltip" title="Cari Tgl." style="font-size:20px;margin-right:5px"></i></a>                   
+                </div>
+                <form action="<?=site_url('Hrd/laporanTerlambatFilter') ?>" method="post">
+                    <div class="form-group collapse" id="cari" style="margin-right:15px;margin-top:5px">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" name="reservation" id="reservation">
+                        <span class="input-group-btn"> <button class="btn btn-info"> Cari</button></span>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </form>
+            <?php }    
+            ?>
         </div>
         <div class="box-body table-responsive">
             <table id="tablehistory" class="table table-bordered table-striped">

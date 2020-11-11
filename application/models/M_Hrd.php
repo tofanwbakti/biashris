@@ -887,6 +887,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->from('tb_absensi');
 			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_absensi.id_kar','left');
 			$this->db->join('tb_kontrak','tb_kontrak.email=tb_karyawan.email','left');
+			$this->db->where('tb_kontrak.kontrak !=',"F");
 			$this->db->where('tb_absensi.tgl >=',$awal);
 			$this->db->where('tb_absensi.tgl <=',$akhir);
 			$this->db->order_by('tb_absensi.id_absen',"ASC");
@@ -1323,7 +1324,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	// ===================== ./HALAMAN Data Cuti Karyawan ==================== 
 	
-	
+	// ============= HALAMAN LAPORAN TERLAMBAT ============================
+		public function getLateAll($awal,$akhir)
+		{
+			$this->db->select('*');
+			$this->db->from('tb_ijinlambat');
+			$this->db->join('tb_karyawan','tb_karyawan.id_kar=tb_ijinlambat.id_kar','inner');
+			$this->db->where('tb_ijinlambat.tgl >=',$awal);
+			$this->db->where('tb_ijinlambat.tgl <=',$akhir);
+			// $this->db->where('tb_karyawan.id_jab !=',"J000");
+			$this->db->order_by('tb_ijinlambat.id_ila',"ASC");
+			$data =  $this->db->get();
+			return $data->result_array();
+		}
+
+	// ============= /. HALAMAN LAPORAN TERLAMBAT ============================
 	}
 	
 /* End of file M_Hrd.php */

@@ -1964,6 +1964,25 @@ class Hrd extends CI_Controller
    }
    // =========== ./ HALAMAN Master Data -> Data Cuti Karyawan=============  
 
+   // ============= HALAMAN LAPORAN TERLAMBAT ============================
+   public function laporanTerlambatFilter()
+   {
+      $reservation = explode(" - ",$this->input->post('reservation'));
+      $dateawal = date("Y-m-d",strtotime($reservation[0]));
+      $dateakhir = date("Y-m-d",strtotime($reservation[1]));
+
+      // echo $dateawal, " - " , $dateakhir;
+
+      $data = array (
+         'judul'           => "Bias HRIS | Laporan Keterlambatan Karyawan ",
+         'rowLate'        => $this->M_Hrd->getLateAll($dateawal,$dateakhir),
+         'awal'            => $dateawal,
+         'akhir'           => $dateakhir
+      );
+      $this->template->load('template', 'hrd/laporanTerlambat',$data); //dashboard khusus HRD 
+   }
+   // ============= /. HALAMAN LAPORAN TERLAMBAT ============================
+
 }
 
 
